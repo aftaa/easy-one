@@ -47,12 +47,14 @@ final class Application
         $routing = $router->findControllerActionByRequestUri();
         // TODO
         if (null === $routing) {
-            $router = new HtmlDebug();
+
             $router->debug();
             throw new \Exception("---404--- The route for $_SERVER[REQUEST_URI] not found");
         }
         $this->main($dependencyInjection, $routing);
-        echo self::$serviceContainer->get(TimeExecution::class)->stop();
+//        $router = new HtmlDebug();
+//        $router->debug();
+//        echo self::$serviceContainer->get(TimeExecution::class)->stop();
         exit;
     }
 
@@ -71,8 +73,5 @@ final class Application
             $arguments[] = $dependencyInjection->make($typename);
         }
         $controller->{$routing->action}(...$arguments);
-
-
-        echo '<br><br></br>ok___';
     }
 }

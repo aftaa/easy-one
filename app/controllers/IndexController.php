@@ -9,38 +9,38 @@ use easy\basic\router\Route;
 use app\services\TestService1;
 use easy\db\Connection;
 use easy\helpers\QueryTimes;
+use easy\http\Request;
+use easy\MVC\Controller;
 
 #[Route('/')]
-class IndexController
+class IndexController extends Controller
 {
-    public function __construct()
-    {
-
-    }
-
-    #[Route('test1')]
+    #[Route('test1', name: 'entry_index')]
     public function function1(GuestbookEntryStorage $storage)
     {
-        $res = $storage->selectFirst();
-        ?>
-        <table border="1">
-            <tr>
-                <td>author</td>
-            </tr>
-            <?php foreach ($res as $row): ?>
-                <tr>
-                    <td><?= $row->author ?></td>
-                    <td><?= $row->status->value ?></td>
-
-                </tr>
-            <?php endforeach ?>
-        </table>
-        <?php
+        $all = $storage->select()->asEntities();
+        $this->render('index/index', [
+            'all' => $all,
+        ]);
     }
 
-    #[Route('test2')]
-    public function test2()
+    /**
+     * @throws \Exception
+     */
+    #[Route('modify', name: 'entry_modify')]
+    public function modify(GuestbookEntryStorage $storage, Request $request)
     {
+        $entry = $storage->load($request->request('id'))->asEntity();
 
+        if ($request->isPost()) {
+            $entry->author = $request->post('author');
+            $entry->title = $request->post('title');
+            $entry->text = $request->post('text');
+            $storage->store($entry);
+        }
+
+        $this->render('index/modify', [
+            'entry' => $entry,
+        ]);
     }
 }

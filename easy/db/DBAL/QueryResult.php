@@ -114,6 +114,6 @@ class QueryResult
      */
     public function asEntity(): Entity
     {
-        return $this->arrayToEntity->transform($this->entity, $this->result);
+        return $this->arrayToEntity->transform($this->entity, $this->data);
     }
 }

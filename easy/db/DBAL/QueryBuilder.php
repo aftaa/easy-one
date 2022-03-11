@@ -81,7 +81,7 @@ class QueryBuilder
      */
     public function param(string $name, mixed $value): static
     {
-        $this[$name] = $value;
+        $this->params[$name] = $value;
         return $this;
     }
 

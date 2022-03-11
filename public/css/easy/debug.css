@@ -1,0 +1,11 @@
+#debug-bottom {
+    background: #362b36;
+    bottom: 0;
+    color: #fff;
+    height: 42px;
+    left: -.025%;
+    padding: 3px;
+    position: fixed;
+    width: 100%;
+    z-index: 100;
+}
