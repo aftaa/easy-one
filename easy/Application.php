@@ -72,10 +72,6 @@ final class Application
         }
         $controller->{$routing->action}(...$arguments);
 
-        $queryTimes = self::$serviceContainer->get(QueryTimes::class);
-
-        echo '<pre>';
-        var_dump(self::$serviceContainer->get(QueryTimes::class));
 
         echo '<br><br></br>ok___';
     }

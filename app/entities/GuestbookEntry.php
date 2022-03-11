@@ -14,4 +14,6 @@ class GuestbookEntry extends Entity
     public ?\DateTimeImmutable $deleted_at = null;
     public GuestbookEntryStatus $status;
     public ?int $user_id;
+    #[ManyToOne('User', column: 'user_id')]
+    public User $user;
 }
