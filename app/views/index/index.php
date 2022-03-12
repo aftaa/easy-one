@@ -5,13 +5,15 @@
 
 ?>
 
-<table border="1">
+<table class="table">
+    <thead>
     <tr>
-        <td>ID</td>
-        <td>author</td>
-        <td>title</td>
-        <td>text</td>
+        <th scope="col">ID</th>
+        <th scope="col">author</th>
+        <th scope="col">title</th>
+        <th scope="col">text</th>
     </tr>
+    </thead>
     <?php foreach ($all as $row): ?>
         <tr>
             <td><?= $row->id ?></td>

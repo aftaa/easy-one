@@ -47,4 +47,12 @@ class ServiceContainer
         }
         return $this->get(DependencyInjection::class)->make($classname);
     }
+
+    /**
+     * @return array
+     */
+    public function getInstances(): array
+    {
+        return $this->container;
+    }
 }

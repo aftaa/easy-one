@@ -10,9 +10,7 @@ class HtmlDebug extends Router
     {
         /** @var $byPath Routing[] */
         $byPath = $this->byPath;
-        ?>
-        <h3>Actual: <b><?= $this->actual ?? 'NULL' ?></b></h3>
-        <table border="1">
+        ?><table class="table">
             <thead>
             <tr>
                 <th>Name</th>

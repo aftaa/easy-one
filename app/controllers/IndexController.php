@@ -15,10 +15,14 @@ use easy\MVC\Controller;
 #[Route('/')]
 class IndexController extends Controller
 {
+    /**
+     * @throws \Throwable
+     */
     #[Route('test1', name: 'entry_index')]
-    public function function1(GuestbookEntryStorage $storage)
+    public function function1(GuestbookEntryStorage $storage, Request $request)
     {
-        $all = $storage->select()->asEntities();
+        $page = $request->query('page') ?? 1;
+        $all = $storage->selectPage($page);
         $this->render('index/index', [
             'all' => $all,
         ]);
