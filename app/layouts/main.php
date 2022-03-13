@@ -13,9 +13,11 @@
 <body>
 
 <div id="content" style="padding: 0 100px;">
-    <h1>Hi,</h1>
+    <h1><a href="<?= $this->link('site_index') ?>">Hi</a>,</h1>
     <h2><a href="<?= $this->link('entry_index') ?>">entries</a>
     <a href="<?= $this->link('entry_deleted') ?>">deleted</a></>
+    <a href="<?= $this->link('entry_create') ?>">create</a></>
+    <a href="<?= $this->link('authors_index') ?>">authors</a></>
     <?= $this->content ?></div>
 <?php require_once 'app/views/debug/bottom.php' ?>
 </body>

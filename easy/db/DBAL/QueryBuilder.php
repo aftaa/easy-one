@@ -11,12 +11,14 @@ class QueryBuilder
     private ?int $limit = null;
     private ?int $offset = null;
     private array $params = [];
+    private ?string $join = '';
     private string $entity;
 
     public function __construct(
         private QueryResult $queryResult,
     )
-    { }
+    {
+    }
 
     /**
      * @param string $select
@@ -75,6 +77,15 @@ class QueryBuilder
     }
 
     /**
+     * @param string $join
+     * @return $this
+     */
+    public function join(string $join): static
+    {
+        $this->join = $join;
+    }
+
+    /**
      * @param string $name
      * @param mixed $value
      * @return $this
@@ -96,7 +107,7 @@ class QueryBuilder
         }
         if ($this->orderBy) {
             $query[] = 'ORDER BY ' . $this->orderBy[0];
-            $query[] = match($this->orderBy[1]) {
+            $query[] = match ($this->orderBy[1]) {
                 SORT_DESC => ' DESC ',
                 default => ' ASC ',
             };

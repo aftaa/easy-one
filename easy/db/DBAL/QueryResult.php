@@ -103,7 +103,7 @@ class QueryResult
     {
         $entities = [];
         foreach ($this->data as $row) {
-            $entities[] = $this->arrayToEntity->transform($this->entity, $row);
+            $entities[$row['id']] = $this->arrayToEntity->transform($this->entity, $row);
         }
         return $entities;
     }

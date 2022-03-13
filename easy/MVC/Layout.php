@@ -51,7 +51,7 @@ class Layout
     }
 
     /**
-     * @param string $routeName
+     * @param string $name
      * @param array $params
      * @return string
      * @throws \Exception

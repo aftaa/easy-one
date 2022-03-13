@@ -2,12 +2,15 @@
 
 namespace easy\basic;
 
+use easy\basic\router\HtmlDebug;
 use easy\basic\router\Routing;
 use easy\basic\router\RoutesCollector;
 use easy\basic\router\FilesCollector;
 
 class Router
 {
+    use HtmlDebug;
+
     /** @var Routing[] */
     protected array $byName = [];
 

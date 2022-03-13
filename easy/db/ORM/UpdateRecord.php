@@ -35,11 +35,11 @@ class UpdateRecord
                 continue;
             }
 
-            if (\DateTimeImmutable::class == $propertyReflection->getType()->getName()) {
-                $value = $value->format('Y-m-d h:i:s');
+            if (\DateTimeImmutable::class === $propertyReflection->getType()->getName()) {
+                $value = $value->format('Y-m-d H:i:s');
             }
-            if (\DateTime::class == $propertyReflection->getType()) {
-                $value = $value->format('Y-m-d h:i:s');
+            if (\DateTime::class === $propertyReflection->getType()->getName()) {
+                $value = $value->format('Y-m-d H:i:s');
             }
             $typeName = $propertyReflection->getType()->getName();
             if (is_object($value) && enum_exists($typeName)) {

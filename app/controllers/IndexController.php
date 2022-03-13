@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\entities\GuestbookEntry;
 use app\entities\GuestbookEntryStatus;
 use app\services\sub\SubService1;
 use app\storages\GuestbookEntryStorage;
@@ -21,13 +22,19 @@ class IndexController extends Controller
     {
         $this->render('index/site', []);
     }
+
     /**
      * @throws \Throwable
      */
     #[Route('test1', name: 'entry_index')]
     public function function1(GuestbookEntryStorage $storage, Request $request)
     {
-        $page = $request->query('page') ?? 1;
+        if ($request->isPost() && ($deleted = $request->request('delete'))) {
+            foreach ($deleted as $id) {
+                $storage->softDelete($id);
+            }
+        }
+        $page = $request->request('page') ?? 1;
         $all = $storage->selectPage($page);
         $count = $storage->selectCount();
         $this->render('index/index', [
@@ -60,6 +67,7 @@ class IndexController extends Controller
             'limit' => 10,
         ]);
     }
+
     /**
      * @throws \Exception
      */
@@ -80,6 +88,28 @@ class IndexController extends Controller
         $this->render('index/modify', [
             'entry' => $entry,
             'statusCases' => GuestbookEntryStatus::class,
+        ]);
+    }
+
+    /**
+     * @throws \ReflectionException
+     * @throws \Throwable
+     */
+    #[Route('create', name: 'entry_create')]
+    public function create(Request $request, GuestbookEntryStorage $storage)
+    {
+        if ($request->isPost()) {
+            $entry = new GuestbookEntry();
+            $entry->author = $request->post('author');
+            $entry->title = $request->post('title');
+            $entry->text = $request->post('text');
+            $entry->created_at = (new \DateTime('now'))->setTimezone(new \DateTimeZone('Europe/Moscow'));
+            $entry->status = GuestbookEntryStatus::VERIFIED;
+            $storage->store($entry);
+        }
+
+        $this->render('index/create', [
+            'statusCases' => GuestbookEntryStatus::cases(),
         ]);
     }
 }

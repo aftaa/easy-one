@@ -3,9 +3,12 @@
 namespace easy\helpers;
 
 use app\config\Config;
+use easy\helpers\HtmlDebug\QueryTimesDebug;
 
 class QueryTimes
 {
+    use QueryTimesDebug;
+
     /** @var QueryTimesItem[] */
     private array $items = [];
 

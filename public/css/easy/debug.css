@@ -69,7 +69,7 @@
 }
 
 #debug-bottom-queries {
-    background: #fff;
+    background: #eee;
     bottom: 44px;
     height: 250px;
     overflow: auto;
@@ -79,7 +79,7 @@
 }
 
 #debug-bottom-routes {
-    background: #fff;
+    background: #eee;
     border-bottom: 1px solid red;
     bottom: 44px;
     color: #ffef8f;

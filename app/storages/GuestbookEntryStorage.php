@@ -18,6 +18,7 @@ class GuestbookEntryStorage extends Storage
             ->where('deleted_at IS NULL')
             ->limit(10)
             ->offset(((int)$page - 1) * 10)
+            ->orderBy(['created_at', SORT_DESC])
             ->getQuery()
             ->getResults()
             ->asEntities();
@@ -78,5 +79,38 @@ class GuestbookEntryStorage extends Storage
             ->param(':id', $id)
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function softDelete(int $id): bool
+    {
+        return $this->createUpgradeBuilder()
+            ->set('deleted_at = NOW()')
+            ->where('id = :id')
+            ->param(':id', $id)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return array
+     */
+    public function selectDistinctAuthors(): array
+    {
+        return $this->createQueryBuilder()
+            ->select('DISTINCT author')
+            ->orderBy(['author', SORT_ASC])
+            ->getQuery()
+            ->getResults()
+            ->asArray();
+    }
+
+    public function selectAuthorEntriesNumAuthorId()
+    {
+        return $this->createQueryBuilder()
+            ->
     }
 }

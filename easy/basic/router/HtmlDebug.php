@@ -4,7 +4,7 @@ namespace easy\basic\router;
 
 use easy\basic\Router;
 
-class HtmlDebug extends Router
+trait HtmlDebug
 {
     public function debug()
     {
