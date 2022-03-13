@@ -1,6 +1,7 @@
 <?php
 /** @var $authors \app\entities\Author[] */
 /** @var $this \easy\MVC\View */
+/** @var $entriesNumber array */
 ?>
 
 <table class="table">
@@ -8,11 +9,11 @@
     <tr>
         <th></th>
         <th>name:</th>
-        <th>numbers of books:</th>
-        <th>look the books:</th>
+        <th>numbers of entries:</th>
+        <th>look the entries:</th>
     </tr>
     </thead>
-    <?php foreach ($authors as $author): ?>
+    <?php foreach ($authors as $id => $author): ?>
     <tr>
         <td>
             <?= $author->id ?>
@@ -21,10 +22,10 @@
             <?= $author->name ?>
         </td>
         <td>
-
+            <?= $entriesNumber[$id]['count'] ?>
         </td>
         <td>
-
+            <?= $this->link('entry_index', ['authorId' => $author->id], 'look!') ?>
         </td>
     </tr>
     <?php endforeach ?>

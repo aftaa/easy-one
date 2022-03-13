@@ -4,7 +4,7 @@
 /** @var $cases array */
 
 ?>
-<form method="post" action="<?= $this->link('entry_create') ?>">
+<form method="post" action="<?= $this->href('entry_create') ?>">
     <div class="row g-3 align-items-center">
         <div class="col-auto">
             <label for="author" class="col-form-label">Author: </label>

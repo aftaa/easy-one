@@ -4,13 +4,8 @@ namespace app\controllers;
 
 use app\entities\GuestbookEntry;
 use app\entities\GuestbookEntryStatus;
-use app\services\sub\SubService1;
 use app\storages\GuestbookEntryStorage;
-use easy\Application;
 use easy\basic\router\Route;
-use app\services\TestService1;
-use easy\db\Connection;
-use easy\helpers\QueryTimes;
 use easy\http\Request;
 use easy\MVC\Controller;
 
@@ -29,14 +24,15 @@ class IndexController extends Controller
     #[Route('test1', name: 'entry_index')]
     public function function1(GuestbookEntryStorage $storage, Request $request)
     {
-        if ($request->isPost() && ($deleted = $request->request('delete'))) {
+        if ($request->isPost() && ($deleted = $request->query('delete'))) {
             foreach ($deleted as $id) {
                 $storage->softDelete($id);
             }
         }
-        $page = $request->request('page') ?? 1;
-        $all = $storage->selectPage($page);
-        $count = $storage->selectCount();
+        $authorId = $request->query('authorId');
+        $page = $request->query('page') ?? 1;
+        $all = $storage->selectPage($page, $authorId);
+        $count = $storage->selectCount($authorId);
         $this->render('index/index', [
             'all' => $all,
             'count' => $count,
@@ -51,13 +47,13 @@ class IndexController extends Controller
     #[Route('deleted', name: 'entry_deleted')]
     public function deleted(Request $request, GuestbookEntryStorage $storage)
     {
-        if ($request->isPost() && ($deleted = $request->request('delete'))) {
+        if ($request->isPost() && ($deleted = $request->query('delete'))) {
             foreach ($deleted as $id) {
                 $storage->restore($id);
             }
         }
 
-        $page = $request->request('page') ?? 1;
+        $page = $request->query('page') ?? 1;
         $entries = $storage->getDeletedEntries($page);
         $count = $storage->deletedCount();
         $this->render('index/deleted', [
@@ -75,7 +71,7 @@ class IndexController extends Controller
     public function modify(GuestbookEntryStorage $storage, Request $request)
     {
 //        $statusCases = GuestbookEntryStatus::c();
-        $entry = $storage->load($request->request('id'))->asEntity();
+        $entry = $storage->load($request->query('id'))->asEntity();
 
         if ($request->isPost()) {
             $entry->author = $request->post('author');

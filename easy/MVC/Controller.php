@@ -6,18 +6,30 @@ use easy\Application;
 
 class Controller
 {
+    final public function __construct(
+        private View $view,
+        private Layout $layout,
+    )
+    {
+
+    }
+
     /**
      * @throws \Throwable
      */
     public function render(string $filename, $params = [])
     {
-        $view = new View();
-        $viewOutput = $view->render($filename, $params);
+        $viewOutput = $this->view->render($filename, $params);
 
         /** @var Layout $layout */
-        $layout = Application::$serviceContainer->init(Layout::class);
-        $layout->content = $viewOutput;
-        $layoutOutput = $layout->render($view->layout, $view->params);
+//        $layout = Application::$serviceContainer->init(Layout::class);
+        $this->layout->content = $viewOutput;
+        $layoutOutput = $this->layout->render($this->view->layout, $this->view->params);
         echo $layoutOutput;
+    }
+
+    public function setView()
+    {
+
     }
 }

@@ -28,7 +28,7 @@
                 <tr>
                     <td><?= $row->id ?></td>
                     <td><?= $row->author ?></td>
-                    <td><a href="<?= $this->link('entry_modify', ['id' => $row->id]) ?>"><?= $row->title ?></a></td>
+                    <td><a href="<?= $this->href('entry_modify', ['id' => $row->id]) ?>"><?= $row->title ?></a></td>
                     <td><?= $row->text ?></td>
                     <td><?= $row->created_at->format('d.m.Y H:i:s') ?></td>
                     <td><?= $row->deleted_at?->format('d.m.Y H:i') ?></td>
@@ -45,7 +45,7 @@
 
 <?php for ($i = 1; $i <= ceil($count / $limit); $i++): ?>
     <?php if ($page == $i): ?><b><?php endif ?>
-    <a href="<?= $this->link('entry_index', ['page' => $i]) ?>"><?= $i ?></a>
+    <a href="<?= $this->href('entry_index', ['page' => $i]) ?>"><?= $i ?></a>
     <?php if ($page == $i): ?></b><?php endif ?>
 
 <?php endfor ?>

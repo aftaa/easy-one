@@ -7,6 +7,8 @@ class QueryBuilder
     private string $select = '*';
     private string $from;
     private ?string $where = null;
+    private ?string $groupBy = null;
+    private ?string $having = null;
     private array $orderBy = [];
     private ?int $limit = null;
     private ?int $offset = null;
@@ -47,6 +49,36 @@ class QueryBuilder
     public function where(string $where): static
     {
         $this->where = $where;
+        return $this;
+    }
+
+    /**
+     * @param string $andWhere
+     * @return $this
+     */
+    public function andWhere(string $andWhere): static
+    {
+        $this->where .= ' AND ' . $andWhere . ' ';
+        return $this;
+    }
+
+    /**
+     * @param string $groupBy
+     * @return $this
+     */
+    public function groupBy(string $groupBy): static
+    {
+        $this->groupBy = $groupBy;
+        return $this;
+    }
+
+    /**
+     * @param string $having
+     * @return $this
+     */
+    public function having(string $having): static
+    {
+        $this->having = $having;
         return $this;
     }
 
@@ -104,6 +136,9 @@ class QueryBuilder
         $query[] = 'SELECT ' . $this->select . ' FROM ' . $this->from;
         if ($this->where) {
             $query[] = 'WHERE ' . $this->where;
+        }
+        if ($this->groupBy) {
+            $query[] = ' GROUP BY ' . $this->groupBy;
         }
         if ($this->orderBy) {
             $query[] = 'ORDER BY ' . $this->orderBy[0];

@@ -12,14 +12,21 @@ class GuestbookEntryStorage extends Storage
      * @return \easy\db\ORM\Entity[]
      * @throws \Exception
      */
-    public function selectPage(int $page): array
+    public function selectPage(int $page, ?int $authorId): array
     {
-        return $this->createQueryBuilder()
-            ->where('deleted_at IS NULL')
+        $queryBuilder = $this->createQueryBuilder();
+            $queryBuilder->where('deleted_at IS NULL')
             ->limit(10)
             ->offset(((int)$page - 1) * 10)
-            ->orderBy(['created_at', SORT_DESC])
-            ->getQuery()
+            ->orderBy(['created_at', SORT_DESC]);
+
+            if ($authorId) {
+                $queryBuilder
+                    ->andWhere('author_id = :author_id')
+                    ->param(':author_id', $authorId);
+            }
+
+            return $queryBuilder->getQuery()
             ->getResults()
             ->asEntities();
     }
@@ -27,12 +34,19 @@ class GuestbookEntryStorage extends Storage
     /**
      * @return int
      */
-    public function selectCount(): int
+    public function selectCount(?int $authorId): int
     {
-        return $this->createQueryBuilder()
+        $queryBuilder = $this->createQueryBuilder();
+        $queryBuilder
             ->select('COUNT(*) AS count')
-            ->where('deleted_at IS NULL')
-            ->getQuery()
+            ->where('deleted_at IS NULL');
+
+            if ($authorId) {
+                $queryBuilder->andWhere('author_id = :author_id')
+                    ->param(':author_id', $authorId);
+            }
+
+            return $queryBuilder->getQuery()
             ->getResult()
             ->asArray()['count'];
     }
@@ -108,9 +122,13 @@ class GuestbookEntryStorage extends Storage
             ->asArray();
     }
 
-    public function selectAuthorEntriesNumAuthorId()
+    public function entriesNumberByAuthorId()
     {
         return $this->createQueryBuilder()
-            ->
+            ->select('author_id, COUNT(author_id) AS count ')
+            ->groupBy('author_id')
+            ->getQuery()
+            ->getResults()
+            ->asArrays('author_id');
     }
 }

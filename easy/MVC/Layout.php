@@ -8,6 +8,8 @@ use easy\basic\Router;
 
 class Layout
 {
+    use RouteTrait;
+
     /**
      * @var string
      */
@@ -48,18 +50,5 @@ class Layout
     public function escape(string $s): string
     {
         return htmlspecialchars($s);
-    }
-
-    /**
-     * @param string $name
-     * @param array $params
-     * @return string
-     * @throws \Exception
-     */
-    public function link(string $name, array $params = []): string
-    {
-        /** @var Router $router */
-        $router = Application::$serviceContainer->get(Router::class);
-        return $router->route($name, $params);
     }
 }

@@ -8,7 +8,7 @@ class Request
      * @param string $name
      * @return string
      */
-    public function query(string $name): mixed
+    public function get(string $name): mixed
     {
         return $_GET[$name] ?? null;
     }
@@ -26,7 +26,7 @@ class Request
      * @param string $name
      * @return string
      */
-    public function request(string $name): mixed
+    public function query(string $name): mixed
     {
         return $_REQUEST[$name] ?? null;
     }

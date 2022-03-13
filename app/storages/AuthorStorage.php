@@ -20,14 +20,4 @@ class AuthorStorage extends Storage
             ->getResults()
             ->asEntities();
     }
-
-    /**
-     * @param Author[] $authors
-     * @return void
-     */
-    public function selectEntriesNumber(array $authors)
-    {
-        foreach ($authors as $authorId => $author) {
-        }
-    }
 }

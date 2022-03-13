@@ -116,4 +116,17 @@ class QueryResult
     {
         return $this->arrayToEntity->transform($this->entity, $this->data);
     }
+
+    /**
+     * @return array
+     */
+    public function asArrays(?string $key): array
+    {
+        $key = $key ?: 'id';
+        $array = [];
+        foreach ($this->data as $row) {
+            $array[$row[$key]] = $row;
+        }
+        return $array;
+    }
 }

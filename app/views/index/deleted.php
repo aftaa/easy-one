@@ -8,7 +8,7 @@
 
 ?>
 <h2>Total count: <?= $count ?></h2>
-    <form method="post" action="<?= $this->link('entry_deleted') ?>">
+    <form method="post" action="<?= $this->href('entry_deleted') ?>">
         <input type="hidden" name="page" value="<?= $page ?>">
         <table class="table">
             <thead>
@@ -27,7 +27,7 @@
                 <tr>
                     <td><?= $row->id ?></td>
                     <td><?= $row->author ?></td>
-                    <td><a href="<?= $this->link('entry_modify', ['id' => $row->id]) ?>"><?= $row->title ?></a></td>
+                    <td><a href="<?= $this->href('entry_modify', ['id' => $row->id]) ?>"><?= $row->title ?></a></td>
                     <td><?= $row->text ?></td>
                     <td><?= $row->created_at->format('d.m.Y H:i') ?></td>
                     <td><?= $row->deleted_at?->format('d.m.Y H:i') ?></td>
@@ -46,7 +46,7 @@
 
 <?php for ($i = 1; $i <= ceil($count / $limit); $i++): ?>
     <?php if ($page == $i): ?><b><?php endif ?>
-    <a href="<?= $this->link('entry_deleted', ['page' => $i]) ?>">&nbsp;<?= $i ?>&nbsp;</a>
+    <a href="<?= $this->href('entry_deleted', ['page' => $i]) ?>">&nbsp;<?= $i ?>&nbsp;</a>
     <?php if ($page == $i): ?></b><?php endif ?>
 
 <?php endfor ?>
