@@ -3,6 +3,8 @@
 namespace easy\MVC;
 
 use app\config\MVC\Layout\Config;
+use easy\Application;
+use easy\basic\Router;
 
 class Layout
 {
@@ -37,5 +39,27 @@ class Layout
         } finally {
             ob_clean();
         }
+    }
+
+    /**
+     * @param string $s
+     * @return string
+     */
+    public function escape(string $s): string
+    {
+        return htmlspecialchars($s);
+    }
+
+    /**
+     * @param string $routeName
+     * @param array $params
+     * @return string
+     * @throws \Exception
+     */
+    public function link(string $name, array $params = []): string
+    {
+        /** @var Router $router */
+        $router = Application::$serviceContainer->get(Router::class);
+        return $router->route($name, $params);
     }
 }

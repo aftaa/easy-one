@@ -17,6 +17,16 @@ class UpgradeBuilder
     { }
 
     /**
+     * @param string $set
+     * @return $this
+     */
+    public function set(string $set): static
+    {
+        $this->set = $set;
+        return $this;
+    }
+
+    /**
      * @param string $from
      * @return $this
      */

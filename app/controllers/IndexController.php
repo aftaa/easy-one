@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\entities\GuestbookEntryStatus;
 use app\services\sub\SubService1;
 use app\storages\GuestbookEntryStorage;
 use easy\Application;
@@ -43,7 +44,13 @@ class IndexController extends Controller
     #[Route('deleted', name: 'entry_deleted')]
     public function deleted(Request $request, GuestbookEntryStorage $storage)
     {
-        $page = $request->query('page') ?? 1;
+        if ($request->isPost() && ($deleted = $request->request('delete'))) {
+            foreach ($deleted as $id) {
+                $storage->restore($id);
+            }
+        }
+
+        $page = $request->request('page') ?? 1;
         $entries = $storage->getDeletedEntries($page);
         $count = $storage->deletedCount();
         $this->render('index/deleted', [
@@ -59,17 +66,20 @@ class IndexController extends Controller
     #[Route('modify', name: 'entry_modify')]
     public function modify(GuestbookEntryStorage $storage, Request $request)
     {
+//        $statusCases = GuestbookEntryStatus::c();
         $entry = $storage->load($request->request('id'))->asEntity();
 
         if ($request->isPost()) {
             $entry->author = $request->post('author');
             $entry->title = $request->post('title');
             $entry->text = $request->post('text');
+            $entry->status = GuestbookEntryStatus::from($request->post('status'));
             $storage->store($entry);
         }
 
         $this->render('index/modify', [
             'entry' => $entry,
+            'statusCases' => GuestbookEntryStatus::class,
         ]);
     }
 }

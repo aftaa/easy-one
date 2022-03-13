@@ -58,10 +58,25 @@ class GuestbookEntryStorage extends Storage
     {
         return $this->createQueryBuilder()
             ->where('deleted_at IS NOT NULL')
+            ->orderBy(['deleted_at', SORT_DESC])
             ->limit(10)
             ->offset(((int)$page - 1) * 10)
             ->getQuery()
             ->getResults()
             ->asEntities();
+    }
+
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function restore(int $id): bool
+    {
+        return $this->createUpgradeBuilder()
+            ->set('deleted_at = NULL')
+            ->where('id = :id')
+            ->param(':id', $id)
+            ->getQuery()
+            ->getResult();
     }
 }

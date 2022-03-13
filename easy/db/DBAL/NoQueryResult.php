@@ -33,6 +33,7 @@ class NoQueryResult
     public function params(array $params = []): static
     {
         $this->params = $params;
+        return $this;
     }
 
     /**

@@ -95,9 +95,9 @@ class QueryBuilder
             $query[] = 'WHERE ' . $this->where;
         }
         if ($this->orderBy) {
-            $query[] = 'ORDER BY ';
+            $query[] = 'ORDER BY ' . $this->orderBy[0];
             $query[] = match($this->orderBy[1]) {
-                'SORT_DESC' => ' DESC ',
+                SORT_DESC => ' DESC ',
                 default => ' ASC ',
             };
         }
