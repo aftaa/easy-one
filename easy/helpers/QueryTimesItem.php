@@ -35,6 +35,7 @@ class QueryTimesItem
     }
 
     /**
+     * @param int $executionTimePrecision
      * @return void
      */
     public function stop(int $executionTimePrecision): void

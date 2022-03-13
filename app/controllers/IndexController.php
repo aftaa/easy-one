@@ -15,6 +15,11 @@ use easy\MVC\Controller;
 #[Route('/')]
 class IndexController extends Controller
 {
+    #[Route('', name: 'site_index')]
+    public function index()
+    {
+        $this->render('index/site', []);
+    }
     /**
      * @throws \Throwable
      */
@@ -23,11 +28,31 @@ class IndexController extends Controller
     {
         $page = $request->query('page') ?? 1;
         $all = $storage->selectPage($page);
+        $count = $storage->selectCount();
         $this->render('index/index', [
             'all' => $all,
+            'count' => $count,
+            'page' => $page,
+            'limit' => 10,
         ]);
     }
 
+    /**
+     * @throws \Throwable
+     */
+    #[Route('deleted', name: 'entry_deleted')]
+    public function deleted(Request $request, GuestbookEntryStorage $storage)
+    {
+        $page = $request->query('page') ?? 1;
+        $entries = $storage->getDeletedEntries($page);
+        $count = $storage->deletedCount();
+        $this->render('index/deleted', [
+            'entries' => $entries,
+            'count' => $count,
+            'page' => $page,
+            'limit' => 10,
+        ]);
+    }
     /**
      * @throws \Exception
      */

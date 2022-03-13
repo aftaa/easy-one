@@ -12,6 +12,9 @@ class QueryTimes
     /** @var ?QueryTimesItem */
     private ?QueryTimesItem $item;
 
+    /** @var float Суммарное время выполнения всех запросов */
+    public float $timeSum = 0;
+
     /**
      * @param Config $config
      */
@@ -37,6 +40,7 @@ class QueryTimes
     {
         $this->item->stop($this->config->executionTimePrecision);
         $this->items[] = $this->item;
+        $this->timeSum += (float)$this->item->getTime();
         $this->item = null;
     }
 

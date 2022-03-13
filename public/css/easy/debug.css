@@ -71,12 +71,11 @@
 #debug-bottom-queries {
     background: #fff;
     bottom: 44px;
-    color: #ffef8f;
-    height: 300px;
+    height: 250px;
     overflow: auto;
     padding: 10px;
     position: fixed;
-    width: 700px;
+    width: 900px;
 }
 
 #debug-bottom-routes {
@@ -84,7 +83,7 @@
     border-bottom: 1px solid red;
     bottom: 44px;
     color: #ffef8f;
-    height: 500px;
+    height: 250px;
     overflow: auto;
     padding: 10px;
     position: fixed;

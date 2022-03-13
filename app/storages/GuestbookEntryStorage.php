@@ -15,8 +15,51 @@ class GuestbookEntryStorage extends Storage
     public function selectPage(int $page): array
     {
         return $this->createQueryBuilder()
+            ->where('deleted_at IS NULL')
             ->limit(10)
-            ->offset(((int)$page - 1) * 20)
+            ->offset(((int)$page - 1) * 10)
+            ->getQuery()
+            ->getResults()
+            ->asEntities();
+    }
+
+    /**
+     * @return int
+     */
+    public function selectCount(): int
+    {
+        return $this->createQueryBuilder()
+            ->select('COUNT(*) AS count')
+            ->where('deleted_at IS NULL')
+            ->getQuery()
+            ->getResult()
+            ->asArray()['count'];
+    }
+
+    /**
+     * @return int
+     */
+    public function deletedCount(): int
+    {
+        return $this->createQueryBuilder()
+            ->select('COUNT(*) AS count')
+            ->where('deleted_at IS NOT NULL')
+            ->getQuery()
+            ->getResult()
+            ->asArray()['count'];
+    }
+
+    /**
+     * @param mixed $page
+     * @return \easy\db\ORM\Entity[]
+     * @throws \Exception
+     */
+    public function getDeletedEntries(mixed $page): array
+    {
+        return $this->createQueryBuilder()
+            ->where('deleted_at IS NOT NULL')
+            ->limit(10)
+            ->offset(((int)$page - 1) * 10)
             ->getQuery()
             ->getResults()
             ->asEntities();

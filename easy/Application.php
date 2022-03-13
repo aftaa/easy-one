@@ -55,8 +55,8 @@ final class Application
 //        $router = new HtmlDebug();
 //        $router->debug();
 //        echo self::$serviceContainer->get(TimeExecution::class)->stop();
-        $qt = self::$serviceContainer->get(QueryTimes::class)->get();
-        var_dump($qt);
+//        $qt = self::$serviceContainer->get(QueryTimes::class)->get();
+//        var_dump($qt);
         exit;
     }
 

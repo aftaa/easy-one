@@ -26,9 +26,9 @@ class ArrayToEntity
                     continue 2;
             }
 
-            if (\DateTimeImmutable::class === $property->getType()) {
+            if (\DateTimeImmutable::class === $property->getType()->getName()) {
                 $entity->$name = $value ? new \DateTimeImmutable($value) : null;
-            } elseif (\DateTime::class === $property->getType()) {
+            } elseif (\DateTime::class === $property->getType()->getName()) {
                 $entity->$name = $value ? new \DateTime($value) : null;
             } elseif (enum_exists($property->getType()->getName())) {
                 $typename = $property->getType()->getName();

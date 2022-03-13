@@ -19,9 +19,9 @@ class ServiceContainer
 
     /**
      * @param string $classname
-     * @return object
+     * @return object|null
      */
-    public function get(string $classname): object
+    public function get(string $classname): ?object
     {
         return $this->container[$classname];
     }

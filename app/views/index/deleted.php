@@ -1,6 +1,6 @@
 <?php
 
-/** @var $all \app\entities\GuestbookEntry[] */
+/** @var $entries \app\entities\GuestbookEntry[] */
 /** @var $this \easy\MVC\View */
 /** @var $count int */
 /** @var $page int */
@@ -19,10 +19,9 @@
         <th scope="col">deleted_at</th>
         <th scope="col">status</th>
         <th scope="col">user_id</th>
-
     </tr>
     </thead>
-    <?php foreach ($all as $row): ?>
+    <?php foreach ($entries as $row): ?>
         <tr>
             <td><?= $row->id ?></td>
             <td><?= $row->author ?></td>
@@ -32,16 +31,13 @@
             <td><?= $row->deleted_at?->format('d.m.Y H:i') ?></td>
             <td><?= $row->status->value ?></td>
             <td><?= $row->user_id ?></td>
-            <th scope="col">
-                <input type="checkbox" name="delete[]" value="<?= $row->id ?>">
-            </th>
         </tr>
     <?php endforeach ?>
 </table>
 
 <?php for ($i = 1; $i <= ceil($count / $limit); $i++): ?>
     <?php if ($page == $i): ?><b><?php endif ?>
-    <a href="<?= $this->link('entry_index', ['page' => $i]) ?>"><?= $i ?></a>
+    <a href="<?= $this->link('entry_deleted', ['page' => $i]) ?>"><?= $i ?></a>
     <?php if ($page == $i): ?></b><?php endif ?>
 
 <?php endfor ?>

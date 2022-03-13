@@ -10,7 +10,7 @@ class GuestbookEntry extends Entity
     public string $author;
     public string $title;
     public string $text;
-    public \DateTimeImmutable $created_at;
+    public ?\DateTimeImmutable $created_at = null;
     public ?\DateTimeImmutable $deleted_at = null;
     public GuestbookEntryStatus $status;
     public ?int $user_id;
