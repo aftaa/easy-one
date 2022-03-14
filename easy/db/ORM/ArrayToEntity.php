@@ -8,6 +8,16 @@ class ArrayToEntity
      * @param string $entity
      * @param array $data
      * @return Entity
+     */
+    public function transform2(string $entity, array $data): Entity
+    {
+        ;
+    }
+
+    /**
+     * @param string $entity
+     * @param array $data
+     * @return Entity
      * @throws \ReflectionException
      */
     public function transform(string $entity, array $data): Entity

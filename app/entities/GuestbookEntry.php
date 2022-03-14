@@ -6,7 +6,7 @@ use easy\db\ORM\Entity;
 
 class GuestbookEntry extends Entity
 {
-    public ?int $id = null;
+    public ?int $id;
     public string $author;
     public string $title;
     public string $text;
@@ -14,7 +14,5 @@ class GuestbookEntry extends Entity
     public ?\DateTime $deleted_at = null;
     public GuestbookEntryStatus $status;
     public ?int $user_id;
-    #[ManyToOne('User', column: 'user_id')]
-    public User $user;
     public int $author_id;
 }
