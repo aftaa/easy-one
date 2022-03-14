@@ -20,4 +20,16 @@ class AuthorStorage extends Storage
             ->getResults()
             ->asEntities();
     }
+
+    /**
+     * @return array
+     */
+    public function showTables(): array
+    {
+        return $this->createQueryBuilder()
+            ->query('SHOW TABLES')
+            ->getQuery()
+            ->getResults()
+            ->asArray();
+    }
 }

@@ -5,8 +5,17 @@ namespace easy\MVC;
 use easy\Application;
 use easy\basic\Router;
 
-trait RouteTrait
+trait ViewLayoutTrait
 {
+    /**
+     * @param string $s
+     * @return string
+     */
+    public function escape(string $s): string
+    {
+        return htmlspecialchars($s);
+    }
+
     /**
      * @param string $name
      * @param array $params

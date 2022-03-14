@@ -7,7 +7,6 @@ use easy\db\ORM\Entity;
 class GuestbookEntry extends Entity
 {
     public ?int $id = null;
-    public string $author;
     public string $title;
     public string $text;
     public \DateTime $created_at;
@@ -15,4 +14,5 @@ class GuestbookEntry extends Entity
     public GuestbookEntryStatus $status;
     public ?int $user_id;
     public int $author_id;
+    //public Author $author;
 }

@@ -11,7 +11,7 @@ trait QueryTimesDebug
         if ($queryTimes) {
             ?>
             <h4>Queries: <?= count($queryTimes->get()) ?> in <?= $queryTimes->timeSum ?>sec.</h4>
-            <table class="table>">
+            <table class="table">
                 <thead>
                 <tr>
                     <th>Query</th>

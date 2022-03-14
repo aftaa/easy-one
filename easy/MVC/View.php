@@ -7,7 +7,7 @@ use easy\basic\Router;
 
 class View
 {
-    use RouteTrait;
+    use ViewLayoutTrait;
 
     /**
      * //TODO
@@ -40,14 +40,5 @@ class View
         } finally {
             ob_clean();
         }
-    }
-
-    /**
-     * @param string $s
-     * @return string
-     */
-    public function escape(string $s): string
-    {
-        return htmlspecialchars($s);
     }
 }

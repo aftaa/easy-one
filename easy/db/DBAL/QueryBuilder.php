@@ -15,6 +15,7 @@ class QueryBuilder
     private array $params = [];
     private ?string $join = '';
     private string $entity;
+    private ?string $query = '';
 
     public function __construct(
         private QueryResult $queryResult,
@@ -115,6 +116,13 @@ class QueryBuilder
     public function join(string $join): static
     {
         $this->join = $join;
+        return $this;
+    }
+
+    public function query(string $query): static
+    {
+        $this->query = $query;
+        return $this;
     }
 
     /**
@@ -133,27 +141,31 @@ class QueryBuilder
      */
     public function getQuery(): QueryResult
     {
-        $query[] = 'SELECT ' . $this->select . ' FROM ' . $this->from;
-        if ($this->where) {
-            $query[] = 'WHERE ' . $this->where;
+        if (!$this->query) {
+            $query[] = 'SELECT ' . $this->select . ' FROM ' . $this->from;
+            if ($this->where) {
+                $query[] = 'WHERE ' . $this->where;
+            }
+            if ($this->groupBy) {
+                $query[] = ' GROUP BY ' . $this->groupBy;
+            }
+            if ($this->orderBy) {
+                $query[] = 'ORDER BY ' . $this->orderBy[0];
+                $query[] = match ($this->orderBy[1]) {
+                    SORT_DESC => ' DESC ',
+                    default => ' ASC ',
+                };
+            }
+            if ($this->limit) {
+                $query[] = 'LIMIT ' . $this->limit;
+            }
+            if ($this->offset) {
+                $query[] = 'OFFSET ' . $this->offset;
+            }
+            $query = implode(' ', $query);
+        } else {
+            $query = $this->query;
         }
-        if ($this->groupBy) {
-            $query[] = ' GROUP BY ' . $this->groupBy;
-        }
-        if ($this->orderBy) {
-            $query[] = 'ORDER BY ' . $this->orderBy[0];
-            $query[] = match ($this->orderBy[1]) {
-                SORT_DESC => ' DESC ',
-                default => ' ASC ',
-            };
-        }
-        if ($this->limit) {
-            $query[] = 'LIMIT ' . $this->limit;
-        }
-        if ($this->offset) {
-            $query[] = 'OFFSET ' . $this->offset;
-        }
-        $query = implode(' ', $query);
         return $this->queryResult->entity($this->entity)->query($query)->params($this->params);
     }
 
