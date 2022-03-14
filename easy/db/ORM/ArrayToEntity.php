@@ -21,8 +21,12 @@ class ArrayToEntity
             $propertyName = $property->getName();
             $propertyType = $property->getType();
 
-            if ((!isset($data[$propertyName]) || null === $data[$propertyName]) && $propertyType->allowsNull()) {
-                $entity->$propertyName = null;
+            if ((!isset($data[$propertyName]) || null === $data[$propertyName])) {
+                if ($propertyType->allowsNull()) {
+                    $entity->$propertyName = null;
+                } else {
+                    throw new \Exception("Поле $propertyName пустое, и не позволяет вставить значение NULL");
+                }
             }
             switch ($propertyType->getName()) {
                 case 'int':
