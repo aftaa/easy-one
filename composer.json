@@ -1,0 +1,15 @@
+{
+    "name": "aftaa/easy-one",
+    "description": "разработка в одном пакете",
+    "require": {
+        "monolog/monolog": "^2.3"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Maxim Gabidullin",
+            "email": "after@ya.ru"
+        }
+    ],
+    "minimum-stability": "stable"
+}
