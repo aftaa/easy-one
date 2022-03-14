@@ -6,7 +6,7 @@ use easy\db\ORM\Entity;
 
 class GuestbookEntry extends Entity
 {
-    public ?int $id;
+    public ?int $id = null;
     public string $author;
     public string $title;
     public string $text;

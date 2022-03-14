@@ -2,50 +2,47 @@
 
 namespace easy\db\ORM;
 
+use app\entities\GuestbookEntry;
+
 class ArrayToEntity
 {
     /**
-     * @param string $entity
+     * @param string $entityName
      * @param array $data
      * @return Entity
+     * @throws \Exception
      */
-    public function transform2(string $entity, array $data): Entity
+    public function transform(string $entityName, array $data): Entity
     {
-        ;
-    }
+        $entity = new $entityName();
+        $reflectionClass = new \ReflectionObject($entity);
+        $properties = $reflectionClass->getProperties();
+        foreach ($properties as $property) {
+            $propertyName = $property->getName();
+            $propertyType = $property->getType();
 
-    /**
-     * @param string $entity
-     * @param array $data
-     * @return Entity
-     * @throws \ReflectionException
-     */
-    public function transform(string $entity, array $data): Entity
-    {
-        $entity = new $entity;
-        foreach ($data as $name => $value) {
-            $property = new \ReflectionProperty($entity, $name);
-
-            switch ($property->getType()->getName()) {
+            if ((!isset($data[$propertyName]) || null === $data[$propertyName]) && $propertyType->allowsNull()) {
+                $entity->$propertyName = null;
+            }
+            switch ($propertyType->getName()) {
                 case 'int':
+                case 'integer':
                 case 'float':
                 case 'double':
                 case 'string':
                 case 'bool':
-                    $entity->$name = $value;
+                    $entity->$propertyName = $data[$propertyName];
                     continue 2;
             }
-
-            if (\DateTimeImmutable::class === $property->getType()->getName()) {
-                $entity->$name = $value ? new \DateTimeImmutable($value) : null;
-            } elseif (\DateTime::class === $property->getType()->getName()) {
-                $entity->$name = $value ? new \DateTime($value) : null;
+            if (\DateTime::class == $propertyType) {
+                $entity->$propertyName = new \DateTime($data[$propertyName] ?? 'now');
+            } elseif (\DateTimeImmutable::class == $propertyType) {
+                $entity->$propertyName = new \DateTimeImmutable($data[$propertyName] ?? 'now');
             } elseif (enum_exists($property->getType()->getName())) {
                 $typename = $property->getType()->getName();
-                $entity->$name = $value ? $typename::from($value) : null;
+                $value = isset($data[$propertyName]) ? $data[$propertyName] : null;
+                $entity->$propertyName = $value ? $typename::from($value) : null;
             }
-
-
         }
         return $entity;
     }
