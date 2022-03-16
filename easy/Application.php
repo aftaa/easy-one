@@ -5,13 +5,10 @@ namespace easy;
 use app\config\Config;
 use easy\basic\DependencyInjection;
 use easy\basic\Router;
-use easy\basic\router\HtmlDebug;
 use easy\basic\router\Routing;
 use easy\basic\ServiceContainer;
 use easy\basic\startup\DebugMode;
 use easy\basic\startup\Environment;
-use easy\helpers\QueryTimes;
-use easy\helpers\QueryTimesItem;
 use easy\helpers\TimeExecution;
 
 final class Application

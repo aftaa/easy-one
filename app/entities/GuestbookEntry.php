@@ -14,5 +14,5 @@ class GuestbookEntry extends Entity
     public GuestbookEntryStatus $status;
     public ?int $user_id;
     public int $author_id;
-    //public Author $author;
+    public ?Author $author = null;
 }
