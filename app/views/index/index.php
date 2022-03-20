@@ -21,7 +21,6 @@
                 <th scope="col">deleted_at</th>
                 <th scope="col">status</th>
                 <th scope="col">user_id</th>
-
             </tr>
             </thead>
             <?php foreach ($all as $row): ?>
@@ -34,9 +33,11 @@
                     <td><?= $row->deleted_at?->format('d.m.Y H:i') ?></td>
                     <td><?= $row->status->value ?></td>
                     <td><?= $row->user_id ?></td>
-                    <th scope="col">
-                        <input type="checkbox" name="delete[]" value="<?= $row->id ?>">
-                    </th>
+                    <td>
+                        <label>
+                            <input type="checkbox" name="delete[]" value="<?= $row->id ?>">
+                        </label>
+                    </td>
                 </tr>
             <?php endforeach ?>
         </table>
