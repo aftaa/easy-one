@@ -3,6 +3,7 @@
 namespace easy;
 
 use app\config\Config;
+use app\controllers\ErrorController;
 use easy\basic\DependencyInjection;
 use easy\basic\Router;
 use easy\basic\router\Routing;
@@ -10,6 +11,7 @@ use easy\basic\ServiceContainer;
 use easy\basic\startup\DebugMode;
 use easy\basic\startup\Environment;
 use easy\helpers\TimeExecution;
+use easy\MVC\View;
 
 final class Application
 {
@@ -48,7 +50,14 @@ final class Application
             $router->debug();
             throw new \Exception("---404--- The route for $_SERVER[REQUEST_URI] not found");
         }
-        $this->main($dependencyInjection, $routing);
+        try {
+            $this->main($dependencyInjection, $routing);
+        } catch (\Throwable $e) {
+            /** @var ErrorController $view */
+            $view = self::$serviceContainer->init(ErrorController::class);
+            $view->exception = $e;
+            echo $view->httpInternalServerError();
+        }
 //        $router = new HtmlDebug();
 //        $router->debug();
 //        echo self::$serviceContainer->get(TimeExecution::class)->stop();

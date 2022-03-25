@@ -4,6 +4,7 @@ namespace easy\MVC;
 
 use easy\Application;
 use easy\basic\Router;
+use JetBrains\PhpStorm\Pure;
 
 trait ViewLayoutTrait
 {
@@ -42,7 +43,6 @@ trait ViewLayoutTrait
                 $html[] = " $option=\"$value\"";
             }
         }
-        $html = $this->linkHtmlOptionsToHtml($htmlOptions);
         $html = join(' ', $html);
         $html = rtrim($html);
         return $html;
@@ -68,6 +68,8 @@ trait ViewLayoutTrait
     public function partial(string $filename, array $params = [])
     {
         $dir = $this->partialGetDir();
+        extract($params);
+        require_once "$dir/$filename.php";
     }
 
     /**
@@ -75,12 +77,11 @@ trait ViewLayoutTrait
      */
     private function partialGetDir(): string
     {
-        $class = get_class($this);
-        if (Layout::class == $class) {
-            $dirname = 'app/layouts';
-        } elseif (View::class == $class) {
-            $dirname = 'app/views';
+        switch (get_class($this)) {
+            case View::class:
+                return 'app/views';
+            case Layout::class:
+                return 'app/layouts';
         }
-        return $dirname;
     }
 }

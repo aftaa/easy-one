@@ -17,20 +17,7 @@
 <body>
 
 <div id="content" style="padding: 0 100px;">
-
-    <?= $this->partial('menu', []) ?>
-
-    <h1><a href="<?= $this->href('site_index') ?>">Hi</a>,</h1>
-    <h2>
-        <?= $this->link('entry_index', [], 'entry index') ?>
-        <a href="<?= $this->href('entry_create') ?>">create</a>
-        <?= $this->link('entry_deleted', [], 'entry deleted', [
-                'style' => 'color: red;'
-        ]) ?>
-        <a href="<?= $this->href('authors_index') ?>">authors</a>
-        <a href="<?= $this->href('test_author') ?>">test author</a>
-        <?= $this->link('show_tables', params: [], label: 'show tables') ?>
-    </h2>
+    <?= $this->partial('menu') ?>
     <?= $this->content ?></div>
 <?php require_once 'app/views/debug/bottom.php' ?>
 </body>
