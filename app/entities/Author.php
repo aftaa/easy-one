@@ -8,4 +8,6 @@ class Author extends Entity
 {
     public ?int $id = null;
     public string $name;
+
+    /** @var $entries GuestbookEntry[] */
 }

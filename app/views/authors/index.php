@@ -22,7 +22,7 @@
             <?= $author->name ?>
         </td>
         <td>
-            <?= $entriesNumber[$id]['count'] ?>
+            <?= @$entriesNumber[$id]['count'] ?>
         </td>
         <td>
             <?= $this->link('entry_index', ['authorId' => $author->id], 'look!') ?>

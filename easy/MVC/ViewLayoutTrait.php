@@ -30,16 +30,57 @@ trait ViewLayoutTrait
     }
 
     /**
+     * @param array|null $htmlOptions
+     * @return string
+     */
+    private function linkHtmlOptionsToHtml(?array $htmlOptions): string
+    {
+        $html = [];
+        if ($htmlOptions) {
+            foreach ($htmlOptions as $option => $value) {
+                $value = $this->escape($value);
+                $html[] = " $option=\"$value\"";
+            }
+        }
+        $html = $this->linkHtmlOptionsToHtml($htmlOptions);
+        $html = join(' ', $html);
+        $html = rtrim($html);
+        return $html;
+    }
+
+    /**
      * @param string $name
      * @param array $params
-     * @param string $label
+     * @param string|null $label
+     * @param array|null $htmlOptions
      * @return string
      * @throws \Exception
      */
-    public function link(string $name, array $params, string $label): string
+    public function link(string $name, array $params = [], ?string $label = null, ?array $htmlOptions = []): string
     {
+        $label = $label ?: $name;
         $href = $this->href($name, $params);
-        $html = "<a href=\"$href\">$label</a>";
+        $html = $this->linkHtmlOptionsToHtml($htmlOptions);
+        $html = "<a href=\"$href\"$html>$label</a>";
         return $html;
+    }
+
+    public function partial(string $filename, array $params = [])
+    {
+        $dir = $this->partialGetDir();
+    }
+
+    /**
+     * @return string
+     */
+    private function partialGetDir(): string
+    {
+        $class = get_class($this);
+        if (Layout::class == $class) {
+            $dirname = 'app/layouts';
+        } elseif (View::class == $class) {
+            $dirname = 'app/views';
+        }
+        return $dirname;
     }
 }

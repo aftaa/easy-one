@@ -10,7 +10,7 @@ use easy\helpers\QueryTimes;
 class QueryResult
 {
     private string $query;
-    private string $entity;
+    private string $entityName;
     private array $params;
     private array $data;
 
@@ -30,7 +30,7 @@ class QueryResult
      * @param string $query
      * @return $this
      */
-    public function query(string $query): static
+    public function setQuery(string $query): static
     {
         $this->query = $query;
         return $this;
@@ -40,9 +40,9 @@ class QueryResult
      * @param string $entity
      * @return $this
      */
-    public function entity(string $entity): static
+    public function setEntityName(string $entity): static
     {
-        $this->entity = $entity;
+        $this->entityName = $entity;
         return $this;
     }
 
@@ -50,7 +50,7 @@ class QueryResult
      * @param array $params
      * @return $this
      */
-    public function params(array $params): static
+    public function setParams(array $params): static
     {
         $this->params = $params;
         return $this;
@@ -96,14 +96,16 @@ class QueryResult
     }
 
     /**
-     * @return Entity[]
+     * @param string|null $key
+     * @return array
      * @throws \Exception
      */
-    public function asEntities(): array
+    public function asEntities(?string $key = null): array
     {
+        $key = $key ?: 'id';
         $entities = [];
         foreach ($this->data as $row) {
-            $entities[$row['id']] = $this->arrayToEntity->transform($this->entity, $row);
+            $entities[$row[$key]] = $this->arrayToEntity->transform($this->entityName, $row);
         }
         return $entities;
     }
@@ -114,7 +116,7 @@ class QueryResult
      */
     public function asEntity(): Entity
     {
-        return $this->arrayToEntity->transform($this->entity, $this->data);
+        return $this->arrayToEntity->transform($this->entityName, $this->data);
     }
 
     /**

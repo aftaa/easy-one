@@ -26,7 +26,7 @@
             <?php foreach ($entries as $row): ?>
                 <tr>
                     <td><?= $row->id ?></td>
-                    <td><?= $row->author ?></td>
+                    <td><?= $authors[$row->author_id]->name ?></td>r
                     <td><a href="<?= $this->href('entry_modify', ['id' => $row->id]) ?>"><?= $row->title ?></a></td>
                     <td><?= $row->text ?></td>
                     <td><?= $row->created_at->format('d.m.Y H:i') ?></td>

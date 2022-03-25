@@ -29,4 +29,10 @@ class AuthorController extends Controller
             'entriesNumber' => $entriesNumber,
         ]);
     }
+
+    #[Route('/test', name: "test_author")]
+    public function authorTest()
+    {
+
+    }
 }

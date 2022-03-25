@@ -2,8 +2,10 @@
 
 namespace app\controllers;
 
+use app\entities\Author;
 use app\entities\GuestbookEntry;
 use app\entities\GuestbookEntryStatus;
+use app\storages\AuthorStorage;
 use app\storages\GuestbookEntryStorage;
 use easy\basic\router\Route;
 use easy\http\Request;
@@ -22,7 +24,7 @@ class IndexController extends Controller
      * @throws \Throwable
      */
     #[Route('test1', name: 'entry_index')]
-    public function function1(GuestbookEntryStorage $storage, Request $request)
+    public function entryIndex(GuestbookEntryStorage $storage, Request $request, AuthorStorage $authorStorage)
     {
         if ($request->isPost() && ($deleted = $request->query('delete'))) {
             foreach ($deleted as $id) {
@@ -38,6 +40,7 @@ class IndexController extends Controller
             'count' => $count,
             'page' => $page,
             'limit' => 10,
+            'authors' => $authorStorage->select()->asEntities(),
         ]);
     }
 
@@ -45,7 +48,7 @@ class IndexController extends Controller
      * @throws \Throwable
      */
     #[Route('deleted', name: 'entry_deleted')]
-    public function deleted(Request $request, GuestbookEntryStorage $storage)
+    public function deleted(Request $request, GuestbookEntryStorage $storage, AuthorStorage $authorStorage)
     {
         if ($request->isPost() && ($deleted = $request->query('delete'))) {
             foreach ($deleted as $id) {
@@ -61,6 +64,7 @@ class IndexController extends Controller
             'count' => $count,
             'page' => $page,
             'limit' => 10,
+            'authors' => $authorStorage->select()->asEntities(),
         ]);
     }
 
@@ -68,13 +72,15 @@ class IndexController extends Controller
      * @throws \Exception
      */
     #[Route('modify', name: 'entry_modify')]
-    public function modify(GuestbookEntryStorage $storage, Request $request)
+    public function modify(GuestbookEntryStorage $storage, Request $request, AuthorStorage $authorStorage)
     {
 //        $statusCases = GuestbookEntryStatus::c();
         $entry = $storage->load($request->query('id'))->asEntity();
 
+        $authors = $authorStorage->select()->asEntities();
+
         if ($request->isPost()) {
-            $entry->author = $request->post('author');
+            $entry->author_id = $request->post('author_id');
             $entry->title = $request->post('title');
             $entry->text = $request->post('text');
             $entry->status = GuestbookEntryStatus::from($request->post('status'));
@@ -84,6 +90,7 @@ class IndexController extends Controller
         $this->render('index/modify', [
             'entry' => $entry,
             'statusCases' => GuestbookEntryStatus::class,
+            'authors' => $authors,
         ]);
     }
 
@@ -92,11 +99,24 @@ class IndexController extends Controller
      * @throws \Throwable
      */
     #[Route('create', name: 'entry_create')]
-    public function create(Request $request, GuestbookEntryStorage $storage)
+    public function create(Request $request, GuestbookEntryStorage $storage, AuthorStorage $authorStorage)
     {
         if ($request->isPost()) {
             $entry = new GuestbookEntry();
-            $entry->author = $request->post('author');
+//            $entry->author = $request->post('author');
+
+            $authorName = $request->post('author');
+            $author = $authorStorage->selectByName($authorName);
+
+            if (!$author) {
+                $author = new Author();
+                $author->name = $authorName;
+                $entry->author_id = $authorStorage->store($author);
+            } else {
+                $entry->author_id = $author->id;
+            }
+
+
             $entry->title = $request->post('title');
             $entry->text = $request->post('text');
             $entry->created_at = (new \DateTime('now'))->setTimezone(new \DateTimeZone('Europe/Moscow'));

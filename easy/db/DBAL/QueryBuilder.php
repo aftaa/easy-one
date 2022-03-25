@@ -166,7 +166,7 @@ class QueryBuilder
         } else {
             $query = $this->query;
         }
-        return $this->queryResult->entity($this->entity)->query($query)->params($this->params);
+        return $this->queryResult->setEntityName($this->entity)->setQuery($query)->setParams($this->params);
     }
 
     /**

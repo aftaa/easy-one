@@ -2,7 +2,9 @@
 
 /** @var $entry \app\entities\GuestbookEntry */
 /** @var $this \easy\MVC\View */
+
 /** @var $statusCases GuestbookEntryStatus */
+/** @var $authors \app\entities\Author[] */
 
 use app\entities\GuestbookEntryStatus;
 
@@ -14,7 +16,17 @@ $this->params['title'] = 'modify-test';
     <table class="table">
         <tr>
             <td>Author:</td>
-            <td><input type="text" name="author" value="<?= $this->escape($entry->author) ?>"></td>
+            <td>
+                <label>
+                    <select name="author_id">
+                        <?php foreach ($authors as $author): ?>
+                            <option value="<?= $author->id ?>" <?php if ($author->id == $entry->author_id) echo ' selected="1"' ?>>
+                                <?= $author->name ?>
+                            </option>
+                        <?php endforeach ?>
+                    </select>
+                </label>
+            </td>
         </tr>
         <tr>
             <td>Title:</td>
@@ -29,27 +41,11 @@ $this->params['title'] = 'modify-test';
             <td>
                 <select name="status">
                     <?php foreach ($statusCases::cases() as $statusCase): ?>
-                    <option value="<?= $statusCase->value ?>"<?php
+                        <option value="<?= $statusCase->value ?>"<?php
                         if ($statusCase == $entry->status) echo ' selected="1"'
-                    ?>><?= $statusCase->name ?></option>
+                        ?>><?= $statusCase->name ?></option>
                     <?php endforeach ?>
                 </select>
-            </td>
-        </tr>
-        <tr>
-            <td>Created at</td>
-            <td>
-                <label>
-                    <input class="class-form" type="date" name="created_at" value="<?= $entry->created_at->format('Y-m-d H:i:s') ?>" required>
-                </label>
-            </td>
-        </tr>
-        <tr>
-            <td>Deleted at</td>
-            <td>
-                <label>
-                    <input class="class-form" type="date" name="deleted_at" value="<?= $entry->created_at->format('Y-m-d H:i:s') ?>">
-                </label>
             </td>
         </tr>
     </table>

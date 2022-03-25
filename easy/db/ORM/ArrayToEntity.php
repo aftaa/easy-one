@@ -17,12 +17,10 @@ class ArrayToEntity
      */
     public function transform(string $entityName, array $data): Entity
     {
+
         $entity = new $entityName();
         $reflectionClass = new \ReflectionObject($entity);
         $properties = $reflectionClass->getProperties();
-        echo '<pre>';
-        var_dump($data);
-        echo '</pre>';
         foreach ($properties as $property) {
             $propertyName = $property->getName();
             $propertyType = $property->getType();
@@ -33,6 +31,8 @@ class ArrayToEntity
                 case 'double':
                 case 'string':
                 case 'bool':
+
+
                     if (!$data[$propertyName] && $propertyType->allowsNull()) {
                         $entity->$propertyName = null;
                     } else {
@@ -55,22 +55,13 @@ class ArrayToEntity
                     continue 2;
             }
 
-/*            if ((!isset($data[$propertyName]) || null === $data[$propertyName])) {
-                if ($propertyType->allowsNull()) {
-                    $entity->$propertyName = null;
-                } elseif (!class_exists($propertyType)) {
-                    throw new \Exception("Поле $propertyName пустое, и не позволяет вставить значение NULL");
-                } else {
-
-                }
-            }*/
-
             if (enum_exists($propertyType->getName())) {
                 $typename = $propertyType->getName();
                 $value = isset($data[$propertyName]) ? $data[$propertyName] : null;
                 $entity->$propertyName = $value ? $typename::from($value) : null;
             } elseif (class_exists($propertyType->getName())) {
-                $this->getColumnValue($entity, $data, $propertyType, $propertyName);
+                continue 1;
+                $entity->$propertyName = $this->getColumnValue($entity, $propertyType);
             }
         }
         return $entity;
@@ -78,18 +69,16 @@ class ArrayToEntity
 
     /**
      * @param Entity $entity
-     * @param array $data
      * @param \ReflectionNamedType $propertyType
-     * @param string $propertyName
-     * @return void
+     * @return Entity
      */
-    private function getColumnValue(Entity $entity, array $data, \ReflectionNamedType $propertyType, string $propertyName): void
+    private function getColumnValue(Entity $entity, \ReflectionNamedType $propertyType): Entity
     {
         $className = $propertyType->getName();
         $storageName = str_replace('entities', 'storages', $className);
         $columnName = strtolower(str_replace('app\storages\\', '', $storageName)) . '_id';
         $storageName .= 'Storage';
         $storage = Application::$serviceContainer->init($storageName);
-        $entity->$propertyName = $storage->load($entity->$columnName)->asEntity();
+        return $storage->load($entity->$columnName)->asEntity();
     }
 }

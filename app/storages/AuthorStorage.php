@@ -4,6 +4,7 @@ namespace app\storages;
 
 use app\entities\Author;
 use app\entities\GuestbookEntry;
+use easy\db\ORM\Entity;
 use easy\db\Storage;
 
 class AuthorStorage extends Storage
@@ -22,14 +23,15 @@ class AuthorStorage extends Storage
     }
 
     /**
-     * @return array
+     * @param string $author
+     * @return Entity|null
      */
-    public function showTables(): array
+    public function selectByName(string $author): ?Entity
     {
         return $this->createQueryBuilder()
-            ->query('SHOW TABLES')
+            ->where('name = :author')
+            ->param(':author', $author)
             ->getQuery()
-            ->getResults()
-            ->asArray();
+            ->getResult()?->asEntity();
     }
 }
