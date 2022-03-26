@@ -65,6 +65,11 @@ trait ViewLayoutTrait
         return $html;
     }
 
+    /**
+     * @param string $filename
+     * @param array $params
+     * @return void
+     */
     public function partial(string $filename, array $params = [])
     {
         $dir = $this->partialGetDir();

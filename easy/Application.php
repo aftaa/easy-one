@@ -3,7 +3,6 @@
 namespace easy;
 
 use app\config\Config;
-use app\controllers\ErrorController;
 use easy\basic\DependencyInjection;
 use easy\basic\Router;
 use easy\basic\router\Routing;
@@ -11,6 +10,7 @@ use easy\basic\ServiceContainer;
 use easy\basic\startup\DebugMode;
 use easy\basic\startup\Environment;
 use easy\helpers\TimeExecution;
+use easy\MVC\Layout;
 use easy\MVC\View;
 
 final class Application
@@ -44,25 +44,25 @@ final class Application
         /** @var Router $router */
         $router = $dependencyInjection->make(Router::class);
         $routing = $router->findControllerActionByRequestUri();
-        // TODO
-        if (null === $routing) {
-
-            $router->debug();
-            throw new \Exception("---404--- The route for $_SERVER[REQUEST_URI] not found");
-        }
         try {
+            // TODO
+            if (null === $routing) {
+
+                $router->debug();
+                throw new \Exception("---404--- The route for $_SERVER[REQUEST_URI] not found");
+            }
             $this->main($dependencyInjection, $routing);
         } catch (\Throwable $e) {
-            /** @var ErrorController $view */
-            $view = self::$serviceContainer->init(ErrorController::class);
-            $view->exception = $e;
-            echo $view->httpInternalServerError();
+            $view = self::$serviceContainer->init(View::class);
+            $errorView = $view->render('errors/500');
+            /** @var Layout $layout */
+            $layout = self::$serviceContainer->init(Layout::class);
+            $layout->content = $errorView;
+            $errorView = $layout->render('error');
+            echo $errorView;
+        } catch (\Throwable $e) {
+            echo $e->getMessage();
         }
-//        $router = new HtmlDebug();
-//        $router->debug();
-//        echo self::$serviceContainer->get(TimeExecution::class)->stop();
-//        $qt = self::$serviceContainer->get(QueryTimesDebug::class)->get();
-//        var_dump($qt);
         exit;
     }
 

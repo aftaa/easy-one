@@ -24,9 +24,15 @@ class Controller
      */
     public function render(string $filename, $params = [])
     {
-        $viewOutput = $this->view->render($filename, $params);
-        $this->layout->content = $viewOutput;
-        $layoutOutput = $this->layout->render($this->view->layout, $this->view->params);
-        echo $layoutOutput;
+        try {
+            $viewOutput = $this->view->render($filename, $params);
+            $this->layout->content = $viewOutput;
+            $layoutOutput = $this->layout->render($this->view->layout, $this->view->params);
+        } catch (\Throwable $e) {
+            throw $e;
+        } finally {
+            echo $layoutOutput;
+        }
+
     }
 }

@@ -24,13 +24,21 @@ class Layout
     {
     }
 
-    public function render(?string $filename, array $params = [])
+    /**
+     * @param string|null $filename
+     * @param array|null $params
+     * @return false|string
+     */
+    public function render(?string $filename = null, ?array $params = [])
     {
         try {
             if (null === $filename) {
                 $filename = $this->config->defaultLayout;
             }
             $filename = 'app/layouts/' . $filename . '.php';
+            if (!file_exists($filename)) {
+                throw new \LogicException("Layout file $filename not found.");
+            }
             extract($params);
             ob_start();
             require_once $filename;
