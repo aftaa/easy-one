@@ -31,7 +31,7 @@
                     <?= $this->link('show_tables', params: [], label: 'Show Tables', htmlOptions: ['class' => 'nav-link']) ?>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled" tabindex="-1" aria-disabled="true" href="<?= $this->href('est_author') ?>">Author test</a>
+                    <a class="nav-link disabled" tabindex="-1" aria-disabled="true" href="<?= $this->href('test_author') ?>">Author test</a>
                 </li>
             </ul>
             <form class="d-flex">

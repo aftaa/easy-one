@@ -31,7 +31,7 @@ class Layout
      */
     public function render(?string $filename = null, ?array $params = [])
     {
-        try {
+//        try {
             if (null === $filename) {
                 $filename = $this->config->defaultLayout;
             }
@@ -42,12 +42,12 @@ class Layout
             extract($params);
             ob_start();
             require_once $filename;
-            return ob_get_clean();
-        } catch (\Throwable $e) {
-            ob_clean();
-            throw $e;
-        } finally {
-            ob_clean();
-        }
+//            return ob_get_clean();
+//        } catch (\Throwable $e) {
+//            ob_clean();
+//            throw $e;
+//        } finally {
+//            ob_clean();
+//        }
     }
 }

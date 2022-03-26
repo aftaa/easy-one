@@ -28,17 +28,17 @@ class View
      */
     public function render(string $filename, array  $params = []): bool|string
     {
-        try {
+//        try {
             $filename = 'app/views/' . $filename . '.php';
             extract($params);
             ob_start();
             require_once $filename;
             return ob_get_clean();
-        } catch (\Throwable $e) {
-            ob_clean();
-            throw $e;
-        } finally {
-            ob_clean();
-        }
+//        } catch (\Throwable $e) {
+//            ob_clean();
+//            throw $e;
+//        } finally {
+//            ob_clean();
+//        }
     }
 }
