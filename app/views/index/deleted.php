@@ -7,10 +7,11 @@
 /** @var $limit int */
 
 ?>
-<h2>Total count: <?= $count ?></h2>
-    <form method="post" action="<?= $this->href('entry_deleted') ?>">
+    <h1 class="deleted-emtries-h1">Deleted guestbook entries</h1>
+    <h2>Total count: <?= $count ?></h2>
+    <form method="post" action="<?= $this->action('entry_deleted') ?>">
         <input type="hidden" name="page" value="<?= $page ?>">
-        <table class="table">
+        <table class="table table-bordered">
             <thead>
             <tr>
                 <th scope="col">ID</th>
@@ -26,7 +27,7 @@
             <?php foreach ($entries as $row): ?>
                 <tr>
                     <td><?= $row->id ?></td>
-                    <td><?= $authors[$row->author_id]->name ?></td>r
+                    <td><?= $authors[$row->author_id]->name ?></td>
                     <td><a href="<?= $this->href('entry_modify', ['id' => $row->id]) ?>"><?= $row->title ?></a></td>
                     <td><?= $row->text ?></td>
                     <td><?= $row->created_at->format('d.m.Y H:i') ?></td>

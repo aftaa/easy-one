@@ -7,10 +7,11 @@
 /** @var $limit int */
 
 ?>
-<h2>Total count: <?= $count ?></h2>
+    <h1>Guestbook entries</h1>
+    <h2>Total count: <?= $count ?></h2>
     <form method="post">
         <input type="hidden" name="page" value="<?= $page ?>">
-        <table class="table">
+        <table class="table table-hover">
             <thead>
             <tr>
                 <th scope="col">ID</th>
@@ -48,5 +49,5 @@
     <?php if ($page == $i): ?><b><?php endif ?>
     <a href="<?= $this->href('entry_index', ['page' => $i]) ?>"><?= $i ?></a>
     <?php if ($page == $i): ?></b><?php endif ?>
-
 <?php endfor ?>
+

@@ -4,30 +4,23 @@
 /** @var $cases array */
 
 ?>
-<form method="post" action="<?= $this->href('entry_create') ?>">
-    <div class="row g-3 align-items-center">
-        <div class="col-auto">
-            <label for="author" class="col-form-label">Author: </label>
-        </div>
-        <div class="col-auto">
-            <input type="text" name="author" id="author" class="form-control" required>
-        </div>
+<?php if (!empty($errorMessage)): ?>
+    <div class="alert alert-danger" role="alert">
+        <?=$errorMessage?>
     </div>
-    <div class="row g-3 align-items-center">
-        <div class="col-auto">
-            <label for="title" class="col-form-label">Title: </label>
-        </div>
-        <div class="col-auto">
-            <input type="text" name="title" id="title" class="form-control" required>
-        </div>
+<?php endif ?>
+<form method="post" action="<?= $this->action('entry_create') ?>">
+    <div class="mb-3">
+        <label for="author" class="form-label">Author</label>
+        <input type="text" class="form-control" id="author" name="author">
     </div>
-    <div class="row g-3 align-items-center">
-        <div class="col-auto">
-            <label for="text" class="col-form-label">Text: </label>
-        </div>
-        <div class="col-auto">
-            <input type="text" name="text" id="text" class="form-control" required>
-        </div>
+    <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" class="form-control" id="title" name="title">
     </div>
-    <input type="submit" name="create" value="create">
+    <div class="mb-3">
+        <label for="text" class="form-label">Text</label>
+        <textarea class="form-control" id="text" name="text"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Create an entry</button>
 </form>

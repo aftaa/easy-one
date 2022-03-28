@@ -8,6 +8,7 @@ use app\entities\GuestbookEntryStatus;
 use app\storages\AuthorStorage;
 use app\storages\GuestbookEntryStorage;
 use easy\basic\router\Route;
+use easy\db\Transaction;
 use easy\http\Request;
 use easy\MVC\Controller;
 
@@ -99,33 +100,60 @@ class IndexController extends Controller
      * @throws \Throwable
      */
     #[Route('create', name: 'entry_create')]
-    public function create(Request $request, GuestbookEntryStorage $storage, AuthorStorage $authorStorage)
+    public function create(Request $request, GuestbookEntryStorage $storage, AuthorStorage $authorStorage, Transaction $transaction)
     {
+        $errorMessage = '';
         if ($request->isPost()) {
-            $entry = new GuestbookEntry();
-//            $entry->author = $request->post('author');
+            try {
+                $transaction->begin();
+                $entry = new GuestbookEntry();
+                $authorName = $request->post('author');
+                $author = $authorStorage->searchByName($authorName);
+                if (!$author) {
+                    $author = new Author();
+                    if (empty($authorName)) {
+                        throw new \Exception("All fields as required");
+                    }
+                    $author->name = $authorName;
+                    $entry->author_id = $authorStorage->store($author);
+                } else {
+                    $entry->author_id = $author->id;
+                }
+                $entry->title = $request->post('title');
+                $entry->text = $request->post('text');
 
-            $authorName = $request->post('author');
-            $author = $authorStorage->selectByName($authorName);
+                if (!strlen($entry->title) || !strlen($entry->text)) {
+                    throw new \Exception("All fields as required");
+                }
 
-            if (!$author) {
-                $author = new Author();
-                $author->name = $authorName;
-                $entry->author_id = $authorStorage->store($author);
-            } else {
-                $entry->author_id = $author->id;
+                $entry->created_at = new \DateTime();
+                $entry->status = GuestbookEntryStatus::VERIFIED;
+                $id = $storage->store($entry);
+                $transaction->commit();
+
+                $this->redirectToRoute('entry_created', ['id' => $id]);
+
+            } catch (\Exception $e) {
+                $transaction->rollback();
+                $errorMessage = $e->getMessage();
             }
-
-
-            $entry->title = $request->post('title');
-            $entry->text = $request->post('text');
-            $entry->created_at = (new \DateTime('now'))->setTimezone(new \DateTimeZone('Europe/Moscow'));
-            $entry->status = GuestbookEntryStatus::VERIFIED;
-            $storage->store($entry);
         }
 
         $this->render('index/create', [
             'statusCases' => GuestbookEntryStatus::cases(),
+            'errorMessage' => $errorMessage,
+        ]);
+    }
+
+    #[Route('done', name: 'entry_created')]
+    public function done(AuthorStorage $authorStorage, GuestbookEntryStorage $storage, Request $request)
+    {
+        /** @var GuestbookEntry $entry */
+        $entry = $storage->load($request->query('id'))->asEntity();
+        $authorName = $authorStorage->load($entry->author_id)->asEntity()->name;
+        $this->render('index/done', [
+            'entry' => $entry,
+            'authorName' => $authorName
         ]);
     }
 }

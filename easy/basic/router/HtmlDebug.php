@@ -24,7 +24,7 @@ trait HtmlDebug
                 <tr>
                     <td><?= $routing->name ?></td>
                     <td><?= $routing->path ?></td>
-                    <td><?= $routing->controller ?></td>
+                    <td><?= str_replace('app\controllers\\', '', $routing->controller) ?></td>
                     <td><?= $routing->action ?></td>
                 </tr>
             <?php endforeach ?>

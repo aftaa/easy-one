@@ -31,6 +31,7 @@ class View
 //        try {
             $filename = 'app/views/' . $filename . '.php';
             extract($params);
+            $params =& $this->params;
             ob_start();
             require_once $filename;
             return ob_get_clean();

@@ -9,12 +9,15 @@ use JetBrains\PhpStorm\Pure;
 trait ViewLayoutTrait
 {
     /**
-     * @param string $s
+     * @param string $string
+     * @param $flags
+     * @param string|null $encoding
+     * @param bool $double_encode
      * @return string
      */
-    public function escape(string $s): string
+    public function escape(string $string, $flags = ENT_QUOTES|ENT_SUBSTITUTE, ?string $encoding = 'UTF-8', bool $double_encode = true): string
     {
-        return htmlspecialchars($s);
+        return htmlspecialchars($string, $flags, $encoding, $double_encode);
     }
 
     /**
@@ -28,6 +31,17 @@ trait ViewLayoutTrait
         /** @var Router $router */
         $router = Application::$serviceContainer->get(Router::class);
         return $router->route($name, $params);
+    }
+
+    /**
+     * @param string $name
+     * @param $params
+     * @return string
+     * @throws \Exception
+     */
+    public function action(string $name, $params = []): string
+    {
+        return $this->href($name, $params);
     }
 
     /**
@@ -60,21 +74,8 @@ trait ViewLayoutTrait
     {
         $label = $label ?: $name;
         $href = $this->href($name, $params);
-        $html = $this->linkHtmlOptionsToHtml($htmlOptions);
-        $html = "<a href=\"$href\"$html>$label</a>";
-        return $html;
-    }
-
-    /**
-     * @param string $filename
-     * @param array $params
-     * @return void
-     */
-    public function partial(string $filename, array $params = [])
-    {
-        $dir = $this->partialGetDir();
-        extract($params);
-        require_once "$dir/$filename.php";
+        $attr = $this->linkHtmlOptionsToHtml($htmlOptions);
+        return "<a href=\"$href\"$attr>$label</a>";
     }
 
     /**
@@ -88,5 +89,17 @@ trait ViewLayoutTrait
             case Layout::class:
                 return 'app/layouts';
         }
+    }
+
+    /**
+     * @param string $filename
+     * @param array $params
+     * @return void
+     */
+    public function partial(string $filename, array $params = [])
+    {
+        $dir = $this->partialGetDir();
+        extract($params);
+        require_once "$dir/$filename.php";
     }
 }

@@ -44,25 +44,14 @@ final class Application
         /** @var Router $router */
         $router = $dependencyInjection->make(Router::class);
         $routing = $router->findControllerActionByRequestUri();
-        try {
-            // TODO
-            if (null === $routing) {
+        // TODO
+        if (null === $routing) {
 
-                $router->debug();
-                throw new \Exception("---404--- The route for $_SERVER[REQUEST_URI] not found");
-            }
-            $this->main($dependencyInjection, $routing);
-        } catch (\Throwable $e) {
-            $view = self::$serviceContainer->init(View::class);
-            $errorView = $view->render('errors/500');
-            /** @var Layout $layout */
-            $layout = self::$serviceContainer->init(Layout::class);
-            $layout->content = $errorView;
-            $errorView = $layout->render('error');
-            echo $errorView;
-        } catch (\Throwable $e) {
-            echo $e->getMessage();
+            $router->debug();
+            throw new \Exception("---404--- The route for $_SERVER[REQUEST_URI] not found");
         }
+        $this->main($dependencyInjection, $routing);
+
         exit;
     }
 

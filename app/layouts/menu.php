@@ -16,13 +16,18 @@
                 <li class="nav-item">
                     <a class="nav-link" href="<?= $this->href('authors_index') ?>">Authors</a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= $this->href('new_feedback') ?>">New feedback</a>
+                </li>
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Entries
+                        Guestbook Entries
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="<?= $this->href('entry_create') ?>">Create</a></li>
                         <li><?= $this->link('entry_index', [], 'List', ['class' => 'dropdown-item']) ?></li>
+                        <li><a class="dropdown-item" href="<?= $this->href('entry_create') ?>">Create</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><?= $this->link('entry_deleted', [], 'Deleted', ['class' => 'dropdown-item', 'style' => 'color: red;']) ?></li>
                     </ul>

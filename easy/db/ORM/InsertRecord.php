@@ -41,13 +41,13 @@ class InsertRecord
                 continue;
             }
 
-            $columns[] = $name;
+            $columns[] = "`$name`";
             $placeholders[] = ":$name";
 
             if (\DateTimeImmutable::class === $propertyReflection->getType()->getName()) {
                 $value = $value->format('Y-m-d H:i:s');
             }
-            if (\DateTime::class === $propertyReflection->getType()->getName()) {
+            elseif (\DateTime::class === $propertyReflection->getType()->getName()) {
                 $value = $value->format('Y-m-d H:i:s');
             }
 
@@ -58,7 +58,7 @@ class InsertRecord
 
             $values[":$name"] = $value;
         }
-        $query[] = "INSERT INTO $tableName (";
+        $query[] = "INSERT INTO `$tableName` (";
         $query[] = join(', ', $columns);
         $query[] = ") VALUES(";
         $query[] = join(', ', $placeholders);

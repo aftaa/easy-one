@@ -10,4 +10,5 @@ class User
     public bool $is_verified;
     public string $roles;
     public string $password;
+    public int $group_id;
 }
