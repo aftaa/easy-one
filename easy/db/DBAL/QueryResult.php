@@ -120,6 +120,7 @@ class QueryResult
     }
 
     /**
+     * @param string|null $key
      * @return array
      */
     public function asArrays(?string $key): array
@@ -130,5 +131,21 @@ class QueryResult
             $array[$row[$key]] = $row;
         }
         return $array;
+    }
+
+    /**
+     * @return int
+     */
+    public function count(): int
+    {
+        return count($this->data);
+    }
+
+    /**
+     * @return bool
+     */
+    public function exists(): bool
+    {
+        return (bool)$this->count();
     }
 }

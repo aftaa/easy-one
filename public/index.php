@@ -14,6 +14,7 @@ spl_autoload_register(/**
     require_once $filename;
 });
 chdir('..');
+session_start();
 
 (new \easy\Application(
     \easy\basic\startup\DebugMode::true,

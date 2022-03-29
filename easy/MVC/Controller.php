@@ -36,7 +36,7 @@ class Controller
      * @return never
      * @throws \Exception
      */
-    public function redirectToRoute(string $routeName, array $params): never
+    public function redirectToRoute(string $routeName, array $params = []): never
     {
         $href = $this->router->route($routeName, $params);
         $this->redirect($href);
@@ -52,4 +52,17 @@ class Controller
         exit;
     }
 
+    /**
+     * @return never
+     */
+    public function back(): never
+    {
+        if (!empty($_SERVER['HTTP_REFERER'])) {
+            $location = $_SERVER['HTTP_REFERER'];
+        } else {
+            $location = '/';
+        }
+        header("Location: $location");
+        exit;
+    }
 }

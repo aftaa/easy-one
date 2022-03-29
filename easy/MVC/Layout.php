@@ -3,8 +3,11 @@
 namespace easy\MVC;
 
 use app\config\MVC\Layout\Config;
+use app\entities\User;
 use easy\Application;
+use easy\auth\Authenticate;
 use easy\basic\Router;
+use easy\http\Session;
 
 class Layout
 {
@@ -17,9 +20,11 @@ class Layout
 
     /**
      * @param Config $config
+     * @param Session $session
      */
     public function __construct(
-        private Config $config,
+        private Config  $config,
+        private Session $session,
     )
     {
     }
@@ -27,28 +32,29 @@ class Layout
     /**
      * @param string|null $filename
      * @param array|null $params
-     * @return false|string
+     * @return void
      */
-    public function render(?string $filename = null, ?array $params = [])
+    public function render(?string $filename = null, ?array $params = []): void
     {
-//        try {
+        if (null === $filename) {
+            $filename = $this->config->defaultLayout;
+        }
+        $filename = 'app/layouts/' . $filename . '.php';
+        if (!file_exists($filename)) {
+            throw new \LogicException("Layout file $filename not found.");
+        }
+        extract($params);
+        require_once $filename;
+    }
 
-            if (null === $filename) {
-                $filename = $this->config->defaultLayout;
-            }
-            $filename = 'app/layouts/' . $filename . '.php';
-            if (!file_exists($filename)) {
-                throw new \LogicException("Layout file $filename not found.");
-            }
-            extract($params);
-//            ob_start();
-            require_once $filename;
-//            return ob_get_clean();
-//        } catch (\Throwable $e) {
-//            ob_clean();
-//            throw $e;
-//        } finally {
-//            ob_clean();
-//        }
+    /**
+     * @return User|false
+     */
+    public function user(): User|false
+    {
+        if ($this->session->has(Authenticate::class)) {
+            return $this->session->get(Authenticate::class);
+        }
+        return false;
     }
 }

@@ -4,7 +4,6 @@ namespace easy\MVC;
 
 use easy\Application;
 use easy\basic\Router;
-use JetBrains\PhpStorm\Pure;
 
 trait ViewLayoutTrait
 {

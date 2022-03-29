@@ -24,22 +24,15 @@ class View
     /**
      * @param string $filename
      * @param array $params
-     * @return bool|string
+     * @return string|false
      */
-    public function render(string $filename, array  $params = []): bool|string
+    public function render(string $filename, array $params = []): string|false
     {
-//        try {
-            $filename = 'app/views/' . $filename . '.php';
-            extract($params);
-            $params =& $this->params;
-            ob_start();
-            require_once $filename;
-            return ob_get_clean();
-//        } catch (\Throwable $e) {
-//            ob_clean();
-//            throw $e;
-//        } finally {
-//            ob_clean();
-//        }
+        $filename = 'app/views/' . $filename . '.php';
+        extract($params);
+        $params =& $this->params;
+        ob_start();
+        require_once $filename;
+        return ob_get_clean();
     }
 }
