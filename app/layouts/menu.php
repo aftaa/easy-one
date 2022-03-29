@@ -43,6 +43,9 @@
                     <a class="nav-link disabled" tabindex="-1" aria-disabled="true"
                        href="<?= $this->href('test_author') ?>">Author test</a>
                 </li>
+                <li class="nav-item">
+                    <?= $this->link('register', [], 'Registration', htmlOptions: ['class' => 'nav-link']) ?>
+                </li>
             </ul>
             <!--            <form class="d-flex">-->
             <!--                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->

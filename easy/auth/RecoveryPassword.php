@@ -2,21 +2,28 @@
 
 namespace easy\auth;
 
+use app\config\auth\passwordRecovery\Config;
 use easy\mail\Email;
 use easy\mail\EmailBody;
 
 class RecoveryPassword
 {
-    public string $url = 'http://easy-one/reset?code=';
     public string $recoveryCode;
     public string $email;
+
+    public function __construct(
+        private Config $config,
+    )
+    {
+    }
+
 
     /**
      * @return void
      */
     public function makeRecoveryCode(): void
     {
-        $this->recoveryCode = md5($this->url . time() . $this->email . rand(0, 100));
+        $this->recoveryCode = md5($this->config->url . time() . $this->email . rand(0, 100));
     }
 
     /**

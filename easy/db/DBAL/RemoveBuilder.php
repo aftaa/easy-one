@@ -71,7 +71,7 @@ class RemoveBuilder
      */
     public function getQuery(): NoQueryResult
     {
-        $query[] = 'DELETE FROM ' . $this->from;
+        $query[] = 'DELETE FROM `' . $this->from . '`';
         if ($this->where) {
             $query[] = 'WHERE ' . $this->where;
         }

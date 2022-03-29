@@ -82,7 +82,7 @@ class UpgradeBuilder
      */
     public function getQuery(): NoQueryResult
     {
-        $query[] = 'UPDATE ' . $this->from . ' SET ' . $this->set;
+        $query[] = 'UPDATE `' . $this->from . '` SET ' . $this->set;
         if ($this->where) {
             $query[] = 'WHERE ' . $this->where;
         }

@@ -142,7 +142,7 @@ class QueryBuilder
     public function getQuery(): QueryResult
     {
         if (!$this->query) {
-            $query[] = 'SELECT ' . $this->select . ' FROM ' . $this->from;
+            $query[] = 'SELECT ' . $this->select . ' FROM `' . $this->from . '`';
             if ($this->where) {
                 $query[] = 'WHERE ' . $this->where;
             }

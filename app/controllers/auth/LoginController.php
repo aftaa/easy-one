@@ -15,16 +15,22 @@ class LoginController extends Controller
     #[Route('/login', name: 'login')]
     public function login(Request $request, Authenticate $authenticate)
     {
+        $errorMessage = '';
         $email = $request->query('email');
         $password = $request->query('password');
 
-        if ($request->isPost() && $authenticate->login($email, $password)) {
-            $this->back();
+        try {
+            if ($request->isPost() && $authenticate->login($email, $password)) {
+                $this->back();
+            }
+        } catch (ActivateException $e) {
+            $errorMessage = 'User is not activated, check email';
         }
 
         $this->render('auth/login', [
             'email' => $email,
             'password' => $password,
+            'errorMessage' => $errorMessage,
         ]);
     }
 }

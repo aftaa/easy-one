@@ -2,6 +2,7 @@
 
 namespace easy\auth;
 
+use app\controllers\auth\ActivateException;
 use app\entities\User;
 use app\storages\UserStorage;
 use easy\http\Session;
@@ -28,6 +29,11 @@ class Authenticate
         $authenticate = $this->storage->authenticate($email, $passwordHash);
 
         if ($authenticate) {
+
+            if (!$authenticate->is_verified) {
+                throw new ActivateException('User isn\'t activated');
+            }
+
             $this->session->set($this::class, $authenticate);
             return true;
         }

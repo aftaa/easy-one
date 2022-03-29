@@ -2,13 +2,16 @@
 /** @var \easy\MVC\View $this */
 /** @var string $login */
 /** @var string $password */
+/** @var string $errorMessage */
 ?>
 
 <h1>Authentication</h1>
 
-
 <div style="margin: 0 auto; width: 500px;">
-    <div class="alert alert-danger" role="alert">Login/password incorrect</div>
+<!--    <div class="alert alert-danger" role="alert">Login/password incorrect</div>-->
+    <?php if ($errorMessage): ?>
+        <div class="alert alert-danger" role="alert"><?= $errorMessage ?></div>
+    <?php endif ?>
     <form>
         <div class="row mb-3">
             <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
