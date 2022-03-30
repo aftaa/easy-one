@@ -29,7 +29,7 @@
         <div class="row mb-3">
             <div class="col-sm-10 offset-sm-2">
                 <div class="form-check">
-                    <input name="remember_me" class="form-check-input" type="checkbox" id="remember_me">
+                    <input name="remember_me" class="form-check-input" type="checkbox" id="remember_me" value="1">
                     <label class="form-check-label" for="remember_me">
                         Remember me
                     </label>

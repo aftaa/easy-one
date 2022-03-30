@@ -3,31 +3,35 @@
 namespace easy\MVC;
 
 use easy\Application;
+use easy\auth\RememberMe;
 use easy\basic\Router;
 use easy\http\Response;
 
 class Controller
 {
+    /**
+     * @throws \Exception
+     */
     final public function __construct(
-        private View     $view,
-        private Layout   $layout,
-        private Response $response,
-        private Router   $router,
+        private View       $view,
+        private Layout     $layout,
+        private Response   $response,
+        private Router     $router,
+        private RememberMe $rememberMe,
     )
     {
-
+        $this->rememberMe->authenticate();
     }
 
     /**
      * @param string $filename
      * @param $params
      * @return void
-     * @throws \Throwable
      */
-    public function render(string $filename, $params = [])
+    public function render(string $filename, $params = []): void
     {
         $this->layout->content = $this->view->render($filename, $params);
-        echo $layoutOutput = $this->layout->render($this->view->layout, $this->view->params);
+        echo $this->layout->render($this->view->layout, $this->view->params);
     }
 
     /**
@@ -62,7 +66,6 @@ class Controller
         } else {
             $location = '/';
         }
-        header("Location: $location");
-        exit;
+        $this->redirect($location);
     }
 }

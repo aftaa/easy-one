@@ -46,6 +46,9 @@
                 <li class="nav-item">
                     <?= $this->link('register', [], 'Registration', htmlOptions: ['class' => 'nav-link']) ?>
                 </li>
+                <li class="nav-item">
+                    <?= $this->link('login', [], 'Login', htmlOptions: ['class' => 'nav-link']) ?>
+                </li>
             </ul>
             <!--            <form class="d-flex">-->
             <!--                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->
