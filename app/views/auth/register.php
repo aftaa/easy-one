@@ -1,6 +1,7 @@
 <?php
 /** @var $this \easy\MVC\View */
 /** @var $errorMessage string */
+/** @var $done bool */
 /** @var $email string */
 /** @var $username string */
 ?>
@@ -10,6 +11,9 @@
 <div style="margin: 0 auto; width: 500px;">
     <?php if (@$errorMessage): ?>
         <div class="alert alert-danger" role="alert"><?= $errorMessage ?></div>
+    <?php endif ?>
+    <?php if (@$done): ?>
+        <div class="alert alert-success" role="alert">Please check your e-mail for activate user record</div>
     <?php endif ?>
     <form method="post" action="<?= $this->action('register') ?>">
         <div class="row mb-3">

@@ -20,8 +20,12 @@ class LoginController extends Controller
         $password = $request->query('password');
 
         try {
-            if ($request->isPost() && $authenticate->login($email, $password)) {
-                $this->back();
+            if ($request->isPost()) {
+                if ($authenticate->login($email, $password)) {
+                    $this->back();
+                } else {
+                    $errorMessage = "Wrong email or password";
+                }
             }
         } catch (ActivateException $e) {
             $errorMessage = 'User is not activated, check email';

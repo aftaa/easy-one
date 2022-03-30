@@ -74,22 +74,22 @@ class UserStorage extends Storage
 
     /**
      * @param string $username
-     * @return bool
+     * @return bool|null
      */
-    public function usernameExists(string $username): bool
+    public function usernameExists(string $username): ?bool
     {
         return $this->createQueryBuilder()
             ->where('`username` = :username')
             ->param(':username', $username)
             ->getQuery()
             ->getResult()
-            ->exists();
+            ?->exists();
     }
 
     public function activateUser(mixed $registerCode)
     {
         $this->createUpgradeBuilder()
-            ->set('is_verified = TRUE, `register` = ""')
+            ->set('is_verified = TRUE, `register` = NULL')
             ->where('`register` = :register')
             ->param(':register', $registerCode)
             ->getQuery()

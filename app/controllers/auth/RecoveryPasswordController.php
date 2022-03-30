@@ -28,7 +28,7 @@ class RecoveryPasswordController extends Controller
 
                 $recoveryPassword->email = $email;
                 $recoveryPassword->makeRecoveryCode();
-                $recoveryPassword->sendRecoveryMail();
+                $done = $recoveryPassword->sendRecoveryMail();
                 $storage->insertRecovery($email, $recoveryPassword->recoveryCode);
                 $done = true;
             } catch (\Exception $e) {
@@ -40,7 +40,7 @@ class RecoveryPasswordController extends Controller
         $this->render('auth/recovery', [
             'error' => $error,
             'email' => $email,
-            'done' => true,
+            'done' => $done,
         ]);
     }
 }

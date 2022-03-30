@@ -17,6 +17,7 @@ class RegisterController extends Controller
     public function register(UserStorage $storage, Request $request, PasswordHash $passwordHash)
     {
         $errorMessage = '';
+        $done = false;
         $email = $request->query('email');
         $username = $request->query('username');
         if ($request->isPost()) {
@@ -53,7 +54,7 @@ class RegisterController extends Controller
                 $user->register = md5($email . $username . time());
                 $storage->store($user);
 
-                (new Email())
+                $done = (new Email())
                     ->addTo($email, $username)
                     ->setSubject('activate user')
                     ->setFrom('max@kuba.msk.ru')
@@ -72,6 +73,7 @@ class RegisterController extends Controller
             'errorMessage' => $errorMessage,
             'email' => $email,
             'username' => $username,
+            'done' => $done,
         ]);
     }
 

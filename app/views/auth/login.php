@@ -12,17 +12,17 @@
     <?php if ($errorMessage): ?>
         <div class="alert alert-danger" role="alert"><?= $errorMessage ?></div>
     <?php endif ?>
-    <form>
+    <form method="post" action="<?= $this->action('login') ?>">
         <div class="row mb-3">
             <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
             <div class="col-sm-10">
-                <input type="email" class="form-control" id="inputEmail3" value="<?= $this->escape($email ?? '') ?>" required>
+                <input type="email" class="form-control" id="inputEmail3" value="<?= $this->escape($email ?? '') ?>" required name="email">
             </div>
         </div>
         <div class="row mb-3">
             <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
             <div class="col-sm-10">
-                <input type="password" class="form-control" id="inputPassword3" value="<?= $this->escape($password ?? '') ?>" required>
+                <input type="password" class="form-control" id="inputPassword3" value="<?= $this->escape($password ?? '') ?>" required name="password">
             </div>
         </div>
 
@@ -36,7 +36,7 @@
                 </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Login</button>
+        <input type="submit" class="btn btn-primary" value="Login">
         or <?= $this->link(name: 'recovery', label: 'recovery my password', params: ['email' => $email]) ?>
     </form>
 </div>

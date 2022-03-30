@@ -67,7 +67,7 @@ class QueryResult
         $data = $stmt->fetch(\PDO::FETCH_ASSOC);
         $this->queryTimes->stop();
         if (false === $data) {
-            $this->data = [];
+            return null;
         } else {
             $this->data = $data;
         }

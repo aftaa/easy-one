@@ -35,7 +35,7 @@ class RecoveryPassword
             ->addTo($this->email)
             ->setFrom('max@kuba.msk.ru', 'easy-one')
             ->setSubject('Recovery password')
-            ->setBody(new EmailBody("Link to recovery password: $this->url$this->recoveryCode"))
+            ->setBody(new EmailBody("Link to recovery password: {$this->config->url}$this->recoveryCode"))
             ->send();
     }
 }
