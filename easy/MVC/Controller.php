@@ -2,7 +2,9 @@
 
 namespace easy\MVC;
 
-use easy\Application;
+use app\entities\User;
+use easy\auth\Authenticate;
+use easy\http\Session;
 use easy\auth\RememberMe;
 use easy\basic\Router;
 use easy\http\Response;
@@ -18,6 +20,7 @@ class Controller
         private Response   $response,
         private Router     $router,
         private RememberMe $rememberMe,
+        private Session    $session,
     )
     {
         $this->rememberMe->authenticate();
@@ -68,4 +71,14 @@ class Controller
         }
         $this->redirect($location);
     }
-}
+
+    /**
+     * @return User|null
+     */
+    public function user(): ?User
+    {
+        if ($this->session->has(Authenticate::class)) {
+            return $this->session->get(Authenticate::class);
+        }
+        return null;
+    }}

@@ -41,7 +41,7 @@ class RememberMe
         $password = $this->cookie->get(self::REMEMBER_ME_PASSWORD);
         try {
             return $this->authenticate->login($email, $password);
-        } catch (\Exception $e) {
+        } catch (\Exception) {
         }
     }
 

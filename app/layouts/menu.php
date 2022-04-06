@@ -49,6 +49,19 @@
                 <li class="nav-item">
                     <?= $this->link('login', [], 'Login', htmlOptions: ['class' => 'nav-link']) ?>
                 </li>
+                <li class="nav-item">
+                    <?= $this->link('user_list', [], 'Users', htmlOptions: ['class' => 'nav-link']) ?>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Groups
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><?= $this->link('create_group', [], 'Create', ['class' => 'dropdown-item']) ?></li>
+                        <li><?= $this->link('group_index', [], 'List', ['class' => 'dropdown-item']) ?></li>
+                    </ul>
+                </li>
             </ul>
             <!--            <form class="d-flex">-->
             <!--                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->

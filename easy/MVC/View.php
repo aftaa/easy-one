@@ -3,7 +3,9 @@
 namespace easy\MVC;
 
 use easy\Application;
+use easy\auth\UserTrait;
 use easy\basic\Router;
+use easy\http\Session;
 
 class View
 {
@@ -20,6 +22,16 @@ class View
      * Заполняется внутри шаблона для макета
      */
     public array $params = [];
+
+    /**
+     * @param Session $session
+     */
+    public function __construct(
+        private Session $session
+    )
+    {
+    }
+
 
     /**
      * @param string $filename

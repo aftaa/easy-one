@@ -4,6 +4,7 @@ namespace easy\auth;
 
 use app\controllers\auth\ActivateException;
 use app\entities\User;
+use app\storages\GroupStorage;
 use app\storages\UserStorage;
 use easy\http\Session;
 
@@ -11,6 +12,7 @@ class Authenticate
 {
     public function __construct(
         private UserStorage $storage,
+        private GroupStorage $groupStorage,
         private Session $session,
         private PasswordHash $passwordHash,
     )
@@ -29,6 +31,8 @@ class Authenticate
         $authenticate = $this->storage->authenticate($email, $passwordHash);
 
         if ($authenticate) {
+
+            $authenticate->group = $this->groupStorage->load($authenticate->group_id)->asEntity();
 
             if (!$authenticate->is_verified) {
                 throw new ActivateException('User isn\'t activated');

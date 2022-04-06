@@ -86,23 +86,25 @@ class Storage
     {
         return $this->createRemoveBuilder()
             ->where('id = :id')
-            ->param(':id', 'id')
+            ->param(':id', $id)
             ->getQuery()
             ->getResult();
     }
 
     /**
      * @param Entity $entity
-     * @return int
-     * @throws \ReflectionException
+     * @return int|null
      */
-    public function store(Entity $entity): int
+    public function store(Entity $entity): ?int
     {
-        $from = $this->storageNameToTableName->transform(get_class($this));
-        if (null === $entity->id) {
-            return $this->insertRecord->insert($entity, $from);
-        } else {
-            return $this->updateRecord->update($entity, $from);
+        try {
+            $from = $this->storageNameToTableName->transform(get_class($this));
+            if (null === $entity->id) {
+                return $this->insertRecord->insert($entity, $from);
+            } else {
+                return $this->updateRecord->update($entity, $from);
+            }
+        } catch (\ReflectionException $e) {
         }
     }
 

@@ -3,10 +3,6 @@
 namespace easy\MVC;
 
 use app\config\MVC\Layout\Config;
-use app\entities\User;
-use easy\Application;
-use easy\auth\Authenticate;
-use easy\basic\Router;
 use easy\http\Session;
 
 class Layout
@@ -45,16 +41,5 @@ class Layout
         }
         extract($params);
         require_once $filename;
-    }
-
-    /**
-     * @return User|false
-     */
-    public function user(): User|false
-    {
-        if ($this->session->has(Authenticate::class)) {
-            return $this->session->get(Authenticate::class);
-        }
-        return false;
     }
 }

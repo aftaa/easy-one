@@ -148,4 +148,18 @@ class QueryResult
     {
         return (bool)$this->count();
     }
+
+    /**
+     * @param string $value
+     * @param string $key
+     * @return array
+     */
+    public function asPairs(string $value, string $key = 'id'): array
+    {
+        $array = [];
+        foreach ($this->data as $datum) {
+            $array[$datum[$key]] = $datum[$value];
+        }
+        return $array;
+    }
 }

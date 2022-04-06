@@ -15,4 +15,6 @@ class User extends Entity
     public ?int $group_id = null;
     public ?string $recovery = null;
     public ?string $register = null;
+
+    public ?Group $group = null;
 }

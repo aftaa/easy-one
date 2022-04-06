@@ -2,7 +2,9 @@
 
 namespace easy\MVC;
 
+use app\entities\User;
 use easy\Application;
+use easy\auth\Authenticate;
 use easy\basic\Router;
 
 trait ViewLayoutTrait
@@ -100,5 +102,17 @@ trait ViewLayoutTrait
         $dir = $this->partialGetDir();
         extract($params);
         require_once "$dir/$filename.php";
+    }
+
+
+    /**
+     * @return User|null
+     */
+    public function user(): ?User
+    {
+        if ($this->session->has(Authenticate::class)) {
+            return $this->session->get(Authenticate::class);
+        }
+        return null;
     }
 }

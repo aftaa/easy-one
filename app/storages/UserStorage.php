@@ -86,12 +86,63 @@ class UserStorage extends Storage
             ?->exists();
     }
 
-    public function activateUser(mixed $registerCode)
+    /**
+     * @param string $registerCode
+     * @return void
+     */
+    public function activateUser(string $registerCode): void
     {
         $this->createUpgradeBuilder()
             ->set('is_verified = TRUE, `register` = NULL')
             ->where('`register` = :register')
             ->param(':register', $registerCode)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param int $userId
+     * @param bool $isVerified
+     * @return void
+     */
+    public function changeIsVerified(int $userId, bool $isVerified): void
+    {
+        $this->createUpgradeBuilder()
+            ->set('`is_verified` = :is_verified')
+            ->where('`user_id` = :user_id')
+            ->param(':is_verified', $isVerified)
+            ->param(':user_id', $userId)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param int $id
+     * @param int|string $groupId
+     * @param int $isVerified
+     * @return void
+     */
+    public function updateUser(int $id, int|string $groupId, int $isVerified) {
+        $this->createUpgradeBuilder()
+            ->set('`is_verified` = :is_verified, `group_id` = :group_id')
+            ->where('`id` = :id')
+            ->param(':id', $id)
+            ->param(':is_verified', $isVerified)
+            ->param(':group_id', !empty($groupId) ? $groupId : null)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param int $groupId
+     * @return void
+     */
+    public function groupSetNull(int $groupId): void
+    {
+        $this->createUpgradeBuilder()
+            ->set('group_id = NULL')
+            ->where('group_id = :group_id')
+            ->param(':group_id', $groupId)
             ->getQuery()
             ->getResult();
     }
