@@ -7,7 +7,7 @@ use easy\MVC\Controller;
 
 class IndexController extends Controller
 {
-    #[Route('/docs', name: 'docs_index')]
+    #[Route('/docs/', name: 'docs_index')]
     public function index()
     {
         $this->render('docs/index');
