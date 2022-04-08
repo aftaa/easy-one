@@ -5,9 +5,6 @@
 
 <h1>Groups</h1>
 <form method="post" action="<?= $this->action('delete_groups') ?>">
-    <?php if ($errorMessage): ?>
-        <div class="alert alert-danger" role="alert"><?= $errorMessage ?></div>
-    <?php endif ?>
     <table class="table">
         <thead>
         <tr>

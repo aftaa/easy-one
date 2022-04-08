@@ -30,7 +30,7 @@ class Cookie
      */
     public function set(string $name, string $value, int $expires = 0): bool
     {
-        return setcookie($name, $value, $expires);
+        return setcookie($name, $value, $expires, '/', $_SERVER['SERVER_NAME']);
     }
 
     /**

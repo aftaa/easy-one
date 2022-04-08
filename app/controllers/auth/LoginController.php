@@ -24,7 +24,9 @@ class LoginController extends Controller
             if ($request->isPost()) {
                 if ($authenticate->login($email, $password)) {
                     if ($request->query('remember_me')) {
-                        $rememberMe->remember($email, $password);
+                        if (!$rememberMe->remember($email, $password)) {
+                            throw new \Exception('Auth cookie was not set');
+                        }
                     }
                     $this->back();
                 } else {

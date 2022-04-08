@@ -52,24 +52,22 @@ class InsertRecord
             }
 
             $typeName = $propertyReflection->getType()->getName();
-            if (is_object($value) && enum_exists($typeName)) {
+            if (\is_object($value) && \enum_exists($typeName)) {
                 $value = $value->value;
             }
 
             $values[":$name"] = $value;
         }
         $query[] = "INSERT INTO `$tableName` (";
-        $query[] = join(', ', $columns);
+        $query[] = \join(', ', $columns);
         $query[] = ") VALUES(";
-        $query[] = join(', ', $placeholders);
+        $query[] = \join(', ', $placeholders);
         $query[] = ")";
-        $query = join(' ', $query);
+        $query = \join(' ', $query);
 
         $this->queryTimes->start($query, $values);
         $this->connection->get()->prepare($query)->execute($values);
         $this->queryTimes->stop();
         return (int)$this->connection->get()->lastInsertId();
-
-//        return $this->noQueryResult->query($query)->params($values);
     }
 }
