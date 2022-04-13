@@ -18,10 +18,18 @@
                     <a class="nav-link" href="<?= $this->href('authors_index') ?>">Authors</a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="<?= $this->href('new_feedback') ?>">New feedback</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Feedback
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <?php if ('admin' == $this->user()?->group->name): ?>
+                            <li><?= $this->link('feedback_list', [], 'List', ['class' => 'dropdown-item']) ?></li>
+                        <?php endif ?>
+                        <li><a class="dropdown-item" href="<?= $this->href('new_feedback') ?>">New</a></li>
+                    </ul>
                 </li>
-
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">

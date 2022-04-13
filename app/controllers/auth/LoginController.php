@@ -6,6 +6,7 @@ use easy\auth\Authenticate;
 use easy\auth\RememberMe;
 use easy\basic\router\Route;
 use easy\http\Request;
+use easy\http\Response;
 use easy\MVC\Controller;
 
 class LoginController extends Controller
@@ -14,7 +15,7 @@ class LoginController extends Controller
      * @throws \Throwable
      */
     #[Route('/login', name: 'login')]
-    public function login(Request $request, Authenticate $authenticate, RememberMe $rememberMe)
+    public function login(Request $request, Authenticate $authenticate, RememberMe $rememberMe): void
     {
         $errorMessage = '';
         $email = $request->query('email');

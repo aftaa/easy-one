@@ -2,10 +2,7 @@
 
 namespace easy\db\ORM;
 
-use app\entities\Author;
-use app\entities\GuestbookEntry;
 use easy\Application;
-use easy\basic\DependencyInjection;
 
 class ArrayToEntity
 {

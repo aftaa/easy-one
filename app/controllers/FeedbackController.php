@@ -9,7 +9,6 @@ use app\storages\FeedbackStorage;
 use easy\basic\router\Route;
 use easy\db\Transaction;
 use easy\http\Request;
-use easy\mail\Mailer;
 use easy\MVC\Controller;
 
 #[Route('/feedback')]
@@ -49,12 +48,25 @@ class FeedbackController extends Controller
     }
 
     #[Route('/complete', name: 'feedback_sent')]
-    public function sent(Request $request, FeedbackMail $mail)
+    public function sent(Request $request, FeedbackMail $mail, FeedbackStorage $feedbackStorage)
     {
-        $mail->sendEmail();
+        $mail->sendEmail($feedbackStorage->load($request->query('id'))->asEntity());
 
         $this->render('feedback/sent', [
             'id' => $request->query('id'),
         ]);
+    }
+
+    #[Route('/list', name: 'feedback_list')]
+    public function list(FeedbackStorage $feedbackStorage)
+    {
+        if ('admin' != $this->user()?->group->name) {
+            $this->render('errors/403');
+        } else {
+            $feedbacks = $feedbackStorage->select()->asEntities();
+            $this->render('feedback/list', [
+                'feedbacks' => $feedbacks,
+            ]);
+        }
     }
 }

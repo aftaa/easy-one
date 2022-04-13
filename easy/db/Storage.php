@@ -39,7 +39,7 @@ class Storage
      */
     protected function createQueryBuilder(): QueryBuilder
     {
-        $storageName = get_class($this);
+        $storageName = $this::class;
         $from = $this->storageNameToTableName->transform($storageName);
         $entity = $this->storageNameToEntityName->transform($storageName);
         return (new QueryBuilder($this->queryResult))->from($from)->entity($entity);
@@ -50,7 +50,7 @@ class Storage
      */
     public function createUpgradeBuilder(): UpgradeBuilder
     {
-        $storageName = get_class($this);
+        $storageName = $this::class;
         $from = $this->storageNameToTableName->transform($storageName);
         return (new UpgradeBuilder($this->noQueryResult))->from($from);
     }
@@ -60,7 +60,7 @@ class Storage
      */
     public function createRemoveBuilder(): RemoveBuilder
     {
-        $storageName = get_class($this);
+        $storageName = $this::class;
         $from = $this->storageNameToTableName->transform($storageName);
         return (new RemoveBuilder($this->noQueryResult))->from($from);
     }
@@ -98,7 +98,7 @@ class Storage
     public function store(Entity $entity): ?int
     {
         try {
-            $from = $this->storageNameToTableName->transform(get_class($this));
+            $from = $this->storageNameToTableName->transform($this::class);
             if (null === $entity->id) {
                 return $this->insertRecord->insert($entity, $from);
             } else {

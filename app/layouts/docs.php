@@ -16,12 +16,15 @@
     <link rel="stylesheet" href="/css/easy/docs.css">
 </head>
 <body>
-    <aside class="bg-light">
-        <p><strong>Оглавление</strong></p>
-        <?= $this->link('docs_index', [], 'Установка') ?>
-    </aside>
-    <main>
-        <?= $this->content ?>
-    </main>
+<aside class="bg-light">
+    <p><strong>Оглавление</strong></p>
+    <ul>
+        <li><?= $this->link('docs_index', [], 'Установка') ?></li>
+        <li><?= $this->link('docs_di', [], 'Dependency Injection') ?></li>
+    </ul>
+</aside>
+<main>
+    <?= $this->content ?>
+</main>
 </body>
 </html>

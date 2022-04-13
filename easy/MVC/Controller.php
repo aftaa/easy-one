@@ -28,10 +28,10 @@ class Controller
 
     /**
      * @param string $filename
-     * @param $params
+     * @param array $params
      * @return void
      */
-    public function render(string $filename, $params = []): void
+    public function render(string $filename, array $params = []): void
     {
         $this->layout->content = $this->view->render($filename, $params);
         echo $this->layout->render($this->view->layout, $this->view->params);

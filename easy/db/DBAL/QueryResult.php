@@ -7,6 +7,8 @@ use easy\db\ORM\ArrayToEntity;
 use easy\db\ORM\Entity;
 use easy\helpers\QueryTimes;
 
+use function count;
+
 class QueryResult
 {
     private string $query;

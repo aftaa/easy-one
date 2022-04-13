@@ -2,18 +2,20 @@
 
 namespace easy\db\DBAL;
 
+use function implode;
+
 class QueryBuilder
 {
     private string $select = '*';
     private string $from;
     private ?string $where = null;
+    private ?string $andWhere = null;
     private ?string $groupBy = null;
     private ?string $having = null;
     private array $orderBy = [];
     private ?int $limit = null;
     private ?int $offset = null;
     private array $params = [];
-    private ?string $join = '';
     private string $entity;
     private ?string $query = '';
 
@@ -59,8 +61,7 @@ class QueryBuilder
      */
     public function andWhere(string $andWhere): static
     {
-        $this->where .= ' AND ' . $andWhere . ' ';
-        return $this;
+        $this->andWhere = $andWhere;
     }
 
     /**
@@ -109,16 +110,6 @@ class QueryBuilder
         return $this;
     }
 
-    /**
-     * @param string $join
-     * @return $this
-     */
-    public function join(string $join): static
-    {
-        $this->join = $join;
-        return $this;
-    }
-
     public function query(string $query): static
     {
         $this->query = $query;
@@ -146,8 +137,14 @@ class QueryBuilder
             if ($this->where) {
                 $query[] = 'WHERE ' . $this->where;
             }
+            if ($this->andWhere) {
+                $query[] = ' AND ' . $this->andWhere;
+            }
             if ($this->groupBy) {
                 $query[] = ' GROUP BY ' . $this->groupBy;
+            }
+            if ($this->having) {
+                $query[] = ' HAVING ' . $this->having;
             }
             if ($this->orderBy) {
                 $query[] = 'ORDER BY ' . $this->orderBy[0];
@@ -156,10 +153,10 @@ class QueryBuilder
                     default => ' ASC ',
                 };
             }
-            if ($this->limit) {
+            if (null !== $this->limit) {
                 $query[] = 'LIMIT ' . $this->limit;
             }
-            if ($this->offset) {
+            if (null !== $this->offset) {
                 $query[] = 'OFFSET ' . $this->offset;
             }
             $query = implode(' ', $query);
