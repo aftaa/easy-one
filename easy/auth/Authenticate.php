@@ -11,10 +11,10 @@ use easy\http\Session;
 class Authenticate
 {
     public function __construct(
-        private UserStorage $storage,
-        private GroupStorage $groupStorage,
-        private Session $session,
-        private PasswordHash $passwordHash,
+        private readonly UserStorage    $storage,
+        private readonly GroupStorage   $groupStorage,
+        private readonly Session        $session,
+        private readonly PasswordHash   $passwordHash,
     )
     {
     }

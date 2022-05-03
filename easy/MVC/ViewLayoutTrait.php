@@ -36,11 +36,11 @@ trait ViewLayoutTrait
 
     /**
      * @param string $name
-     * @param $params
+     * @param array $params
      * @return string
      * @throws \Exception
      */
-    public function action(string $name, $params = []): string
+    public function action(string $name, array $params = []): string
     {
         return $this->href($name, $params);
     }

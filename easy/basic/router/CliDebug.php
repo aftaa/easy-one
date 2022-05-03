@@ -4,7 +4,10 @@ namespace easy\basic\router;
 
 trait CliDebug
 {
-    public function cli_debug()
+    /**
+     * @return void
+     */
+    public function cli_debug(): void
     {
         /** @var $byPath Routing[] */
         $byPath = $this->byPath;

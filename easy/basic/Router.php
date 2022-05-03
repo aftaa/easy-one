@@ -33,9 +33,7 @@ class Router
         $this->byName = $routes->routesByName;
     }
 
-    /**use common\types\Routing;
-
-     * @param string $path
+    /**
      * @return Routing|null
      */
     public function findControllerActionByRequestUri(): ?Routing

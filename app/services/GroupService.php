@@ -9,9 +9,9 @@ use easy\db\Transaction;
 class GroupService
 {
     public function __construct(
-        private GroupStorage $groupStorage,
-        private UserStorage  $userStorage,
-        private Transaction  $transaction,
+        private readonly GroupStorage $groupStorage,
+        private readonly UserStorage  $userStorage,
+        private readonly Transaction  $transaction,
     )
     {
     }
@@ -20,7 +20,7 @@ class GroupService
      * @param array $ids
      * @return void
      */
-    public function deleteGroups(array $ids)
+    public function deleteGroups(array $ids): void
     {
         foreach ($ids as $groupId) {
 

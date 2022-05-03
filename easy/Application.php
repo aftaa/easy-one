@@ -10,8 +10,6 @@ use easy\basic\ServiceContainer;
 use easy\basic\startup\DebugMode;
 use easy\basic\startup\Environment;
 use easy\helpers\TimeExecution;
-use easy\MVC\Layout;
-use easy\MVC\View;
 
 final class Application
 {
@@ -58,7 +56,7 @@ final class Application
     /**
      * @throws \ReflectionException
      */
-    public function main(DependencyInjection $dependencyInjection, Routing $routing)
+    public function main(DependencyInjection $dependencyInjection, Routing $routing): void
     {
         $controller = $dependencyInjection->make($routing->controller);
         $reflection = new \ReflectionObject($controller);

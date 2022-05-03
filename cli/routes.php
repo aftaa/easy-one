@@ -1,5 +1,7 @@
 <?php
 
+use easy\basic\Router;
+
 spl_autoload_register(/**
  * @throws Exception
  */ function (string $classname) {
@@ -12,13 +14,9 @@ spl_autoload_register(/**
     require_once $filename;
 });
 
-//(new \easy\Application(
-//    \easy\basic\startup\DebugMode::true,
-//    \easy\basic\startup\Environment::DEV))->run();
-
 $serviceContainer = new \easy\basic\ServiceContainer();
 $dependencyInjection = new \easy\basic\DependencyInjection(new \app\config\basic\dependencyInjection\Config(), $serviceContainer);
 $serviceContainer->add($dependencyInjection);
-/** @var \easy\basic\Router $router */
-$router = $serviceContainer->init(\easy\basic\Router::class);
+/** @var Router $router */
+$router = $serviceContainer->init(Router::class);
 $router->cli_debug();
