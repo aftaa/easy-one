@@ -4,6 +4,7 @@ namespace easy\auth;
 
 use app\config\auth\rememberMe\Config;
 use easy\http\Cookie;
+use easy\http\Cookies;
 
 class RememberMe
 {
@@ -11,9 +12,9 @@ class RememberMe
     const REMEMBER_ME_PASSWORD = 'remember_me_password';
 
     public function __construct(
-        private Config       $config,
-        private Cookie       $cookie,
-        private Authenticate $authenticate,
+        private readonly Config       $config,
+        private readonly Cookies      $cookies,
+        private readonly Authenticate $authenticate,
     )
     {
     }
@@ -26,8 +27,9 @@ class RememberMe
     public function remember(string $email, string $password): bool
     {
         $expires = $this->config->expires;
-        return $this->cookie->set(self::REMEMBER_ME_EMAIL, $email, $expires)
-            && $this->cookie->set(self::REMEMBER_ME_PASSWORD, $password, $expires);
+        $cookieEmail = new Cookie(self::REMEMBER_ME_EMAIL, $email, $expires);
+        $cookiePassword = new Cookie(self::REMEMBER_ME_PASSWORD, $password, $expires);
+        return $this->cookies->add($cookieEmail) && $this->cookies->add($cookiePassword);
     }
 
     /**

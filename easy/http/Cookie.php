@@ -2,43 +2,41 @@
 
 namespace easy\http;
 
-class Cookie
+class Cookie implements \Stringable
 {
-    /**
-     * @param string $name
-     * @return bool
-     */
-    public function has(string $name): bool
-    {
-        return isset($_COOKIE[$name]);
-    }
-
-    /**
-     * @param string $name
-     * @return string
-     */
-    public function get(string $name): string
-    {
-        return $_COOKIE[$name];
-    }
-
     /**
      * @param string $name
      * @param string $value
      * @param int $expires
-     * @return bool
+     * @param string $path
+     * @param string $domain
+     * @param bool $security
+     * @param bool $httponly
      */
-    public function set(string $name, string $value, int $expires = 0): bool
+    public function __construct(
+        public string $name,
+        public string $value,
+        public int    $expires = 0,
+        public string $path = '',
+        public string $domain = '',
+        public bool   $security = false,
+        public bool   $httponly = false,
+    )
     {
-        return setcookie($name, $value, $expires, '/', $_SERVER['SERVER_NAME']);
     }
 
     /**
-     * @param string $name
      * @return bool
      */
-    public function del(string $name): bool
+    public function set(): bool
     {
-        return setcookie($name, '', time() - 3600);
+        return setcookie($this->name, $this->value, $this->expires, $this->path, $this->domain, $this->security, $this->httponly);
+    }
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->value;
     }
 }
