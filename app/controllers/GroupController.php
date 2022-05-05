@@ -7,12 +7,12 @@ use app\services\GroupService;
 use app\storages\GroupStorage;
 use easy\basic\router\Route;
 use easy\http\Request;
-use easy\MVC\Controller;
+use easy\mvc\Controller;
 
 #[Route('/groups')]
 class GroupController extends Controller
 {
-    #[Route('', name: 'group_index')]
+    #[Route('', name: 'group_index', methods: ['GET'])]
     public function index(GroupStorage $storage)
     {
         $this->render('groups/index', [
@@ -20,7 +20,7 @@ class GroupController extends Controller
         ]);
     }
 
-    #[Route('/create', name: 'create_group')]
+    #[Route('/create', name: 'create_group', methods: ['POST', 'GET'])]
     public function create(Request $request, GroupStorage $storage)
     {
         if ('admin' != $this->user()?->group->name) {
@@ -47,7 +47,7 @@ class GroupController extends Controller
         }
     }
 
-    #[Route('/delete', name: 'delete_groups')]
+    #[Route('/delete', name: 'delete_groups', methods: ['POST'])]
     public function delete(Request $request, GroupService $service)
     {
         if ($request->isPost() && $request->query('delete')) {

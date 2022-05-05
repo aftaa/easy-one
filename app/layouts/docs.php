@@ -1,5 +1,5 @@
 <?php
-/** @var $this \easy\MVC\Layout */
+/** @var $this \easy\mvc\Layout */
 ?><!DOCTYPE html>
 <html lang="ru">
 <head>

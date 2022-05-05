@@ -87,7 +87,7 @@
     overflow: auto;
     padding: 10px;
     position: fixed;
-    width: 700px;
+    width: 900px;
 }
 
 #debug-bottom-load-classes, #debug-bottom-container, #debug-bottom-queries, #debug-bottom-routes {

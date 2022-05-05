@@ -9,7 +9,7 @@ use easy\basic\router\Route;
 use easy\http\Request;
 use easy\mail\Email;
 use easy\mail\EmailBody;
-use easy\MVC\Controller;
+use easy\mvc\Controller;
 
 class RegisterController extends Controller
 {

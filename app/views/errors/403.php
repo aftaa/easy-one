@@ -1,5 +1,5 @@
 <?php
-/** @var $this \easy\MVC\View */
+/** @var $this \easy\mvc\View */
 $params['title'] = '403 Forbidden';
 header('HTTP/1.0 403 Forbidden');
 ?>

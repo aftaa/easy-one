@@ -10,22 +10,27 @@ trait HtmlDebug
     {
         /** @var $byPath Routing[] */
         $byPath = $this->byPath;
-        ?><table class="table">
+        ?>
+        <table class="table">
             <thead>
             <tr>
                 <th>Name</th>
                 <th>Path</th>
                 <th>Controller</th>
                 <th>Action</th>
+                <th>Methods</th>
             </tr>
             </thead>
             <tbody>
-            <?php foreach ($byPath as $path => $routing): ?>
-                <tr>
-                    <td><?= $routing->name ?></td>
-                    <td><?= $routing->path ?></td>
-                    <td><?= str_replace('app\controllers\\', '', $routing->controller) ?></td>
-                    <td><?= $routing->action ?></td>
+            <?php foreach ($byPath
+
+            as $path => $routing): ?>
+            <tr>
+                <td><?= $routing->name ?></td>
+                <td><?= $routing->path ?></td>
+                <td><?= str_replace('app\controllers\\', '', $routing->controller) ?></td>
+                <td><?= $routing->action ?></td>
+                <td><?= $routing->methods ?></td>
                 </tr>
             <?php endforeach ?>
             </tbody>

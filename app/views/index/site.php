@@ -1,4 +1,4 @@
 <?php
-/** @var $this \easy\MVC\View */
+/** @var $this \easy\mvc\View */
 ?>
 <?= phpinfo() ?>

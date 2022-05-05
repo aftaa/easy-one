@@ -1,5 +1,5 @@
 <?php
-/** @var $this \easy\MVC\View */
+/** @var $this \easy\mvc\View */
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">

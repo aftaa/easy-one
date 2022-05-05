@@ -58,6 +58,9 @@ final class Application
      */
     public function main(DependencyInjection $dependencyInjection, Routing $routing): void
     {
+        if (!$routing->methods->applicable()) {
+            throw new \Exception("Экшн не поддерживает вызов данным HTTP-методом");
+        }
         $controller = $dependencyInjection->make($routing->controller);
         $reflection = new \ReflectionObject($controller);
         $method = $reflection->getMethod($routing->action);

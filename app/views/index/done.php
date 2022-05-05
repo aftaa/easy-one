@@ -1,5 +1,5 @@
 <?php
-/** @var $this \easy\MVC\View */
+/** @var $this \easy\mvc\View */
 /** @var $params array */
 /** @var $entry \app\entities\GuestbookEntry */
 /** @var $authorName string */

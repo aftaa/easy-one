@@ -1,7 +1,7 @@
 <?php
 
 /** @var $all \app\entities\GuestbookEntry[] */
-/** @var $this \easy\MVC\View */
+/** @var $this \easy\mvc\View */
 /** @var $count int */
 /** @var $page int */
 /** @var $limit int */

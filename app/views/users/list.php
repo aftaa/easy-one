@@ -1,5 +1,5 @@
 <?php
-/** @var \easy\MVC\View $this */
+/** @var \easy\mvc\View $this */
 /** @var \app\entities\User[] $users */
 /** @var array $groups */
 $params['title'] = 'Users';

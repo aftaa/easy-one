@@ -1,6 +1,6 @@
 <?php
 
-namespace easy\MVC;
+namespace easy\mvc;
 
 use app\config\MVC\Layout\Config;
 use easy\http\Session;

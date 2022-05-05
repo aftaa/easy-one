@@ -1,7 +1,7 @@
 <?php
 
 /** @var $entry \app\entities\GuestbookEntry */
-/** @var $this \easy\MVC\View */
+/** @var $this \easy\mvc\View */
 
 /** @var $statusCases GuestbookEntryStatus */
 /** @var $authors \app\entities\Author[] */

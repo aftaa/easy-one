@@ -1,5 +1,5 @@
 <?php
-/** @var \easy\MVC\View $this */
+/** @var \easy\mvc\View $this */
 /** @var string $login */
 /** @var string $password */
 /** @var string $errorMessage */

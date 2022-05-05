@@ -17,6 +17,9 @@ trait CliDebug
             echo ' -> ';
             echo '"' . $routing->name . '"';
             echo '   (' .  $routing->action . '@' . str_replace('app\controllers\\', '', $routing->controller) . ')';
+            if ($routing->methods) {
+                echo '   ' . $routing->methods;
+            }
             echo "\n";
             echo "\n";
         }

@@ -1,7 +1,7 @@
 <?php
 
 /** @var $tables array */
-/** @var $this \easy\MVC\View */
+/** @var $this \easy\mvc\View */
 
 ?>
 

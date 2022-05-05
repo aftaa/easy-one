@@ -12,8 +12,8 @@ class RememberMe
     const REMEMBER_ME_PASSWORD = 'remember_me_password';
 
     public function __construct(
-        private readonly Config       $config,
-        private readonly Cookies      $cookies,
+        private readonly Config $config,
+        private readonly Cookies $cookies,
         private readonly Authenticate $authenticate,
     )
     {
@@ -37,10 +37,10 @@ class RememberMe
      */
     public function authenticate(): void
     {
-        if (!$this->cookie->has(self::REMEMBER_ME_EMAIL)) return;
+        if (!$this->cookies->has(self::REMEMBER_ME_EMAIL)) return;
 
-        $email = $this->cookie->get(self::REMEMBER_ME_EMAIL);
-        $password = $this->cookie->get(self::REMEMBER_ME_PASSWORD);
+        $email = (string)$this->cookies->get(self::REMEMBER_ME_EMAIL);
+        $password = (string)$this->cookies->get(self::REMEMBER_ME_PASSWORD);
         try {
             $this->authenticate->login($email, $password);
         } catch (\Exception) {
@@ -52,7 +52,7 @@ class RememberMe
      */
     public function forget(): bool
     {
-        return $this->cookie->del(self::REMEMBER_ME_EMAIL)
-            && $this->cookie->del(self::REMEMBER_ME_PASSWORD);
+        return $this->cookies->del(self::REMEMBER_ME_EMAIL)
+            && $this->cookies->del(self::REMEMBER_ME_PASSWORD);
     }
 }

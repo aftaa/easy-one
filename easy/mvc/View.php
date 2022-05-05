@@ -1,6 +1,6 @@
 <?php
 
-namespace easy\MVC;
+namespace easy\mvc;
 
 use easy\Application;
 use easy\auth\UserTrait;

@@ -31,10 +31,11 @@ class RoutesCollector
                     $arguments = $attribute->getArguments();
                     $name = @$arguments['name'];
                     $path = $arguments[0];
+                    $methods = new RoutingMethods(@$arguments['methods']);
                     if ($pathPrefix) {
                         $path = $pathPrefix . $path;
                     }
-                    $routing = new Routing($class, $method->name, $name, $path);
+                    $routing = new Routing($class, $method->name, $name, $path, $methods);
                     if ($name) {
                         $byName[$name] = $routing;
                     }

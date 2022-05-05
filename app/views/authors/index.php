@@ -1,6 +1,6 @@
 <?php
 /** @var $authors \app\entities\Author[] */
-/** @var $this \easy\MVC\View */
+/** @var $this \easy\mvc\View */
 /** @var $entriesNumber array */
 /** @var $count int */
 /** @var $page int */

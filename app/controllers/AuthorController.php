@@ -8,7 +8,7 @@ use app\storages\GuestbookEntryStorage;
 use easy\basic\router\Route;
 use easy\db\Connection;
 use easy\http\Request;
-use easy\MVC\Controller;
+use easy\mvc\Controller;
 
 #[Route('/authors')]
 class AuthorController extends Controller
@@ -17,7 +17,7 @@ class AuthorController extends Controller
      * @throws \ReflectionException
      * @throws \Throwable
      */
-    #[Route('', name: 'authors_index')]
+    #[Route('', name: 'authors_index', methods: ['GET'] )]
     public function index(AuthorStorage $authorStorage, GuestbookEntryStorage $entryStorage, Request $request)
     {
         $authors = $authorStorage->selectPage($request->query('page') ?? 1);

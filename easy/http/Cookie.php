@@ -27,11 +27,21 @@ class Cookie implements \Stringable
 
     /**
      * @return bool
+     * @throws \Exception
      */
     public function set(): bool
     {
+        if (!strlen(trim($this->name))) {
+            throw new \Exception('Задайте имя куки');
+        }
+
+        if (!strlen(trim($this->value))) {
+            throw new \Exception('Задайте значение куки');
+        }
+
         return setcookie($this->name, $this->value, $this->expires, $this->path, $this->domain, $this->security, $this->httponly);
     }
+
     /**
      * @return string
      */

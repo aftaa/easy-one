@@ -6,7 +6,7 @@ use app\storages\GroupStorage;
 use app\storages\UserStorage;
 use easy\basic\router\Route;
 use easy\http\Request;
-use easy\MVC\Controller;
+use easy\mvc\Controller;
 
 #[Route('/users')]
 class UserController extends Controller
@@ -14,7 +14,7 @@ class UserController extends Controller
     /**
      * @throws \Exception
      */
-    #[Route('/list', name: 'user_list')]
+    #[Route('/list', name: 'user_list', methods: ['GET'])]
     public function list(UserStorage $userStorage, GroupStorage $groupStorage)
     {
         if ('admin' != $this->user()?->group->name) {
@@ -31,7 +31,10 @@ class UserController extends Controller
         ]);
     }
 
-    #[Route('/update', name: 'update_users')]
+    /**
+     * @throws \Exception
+     */
+    #[Route('/update', name: 'update_users', methods: ['POST'])]
     public function update(Request $request, UserStorage $userStorage)
     {
         $users = $request->post('users');

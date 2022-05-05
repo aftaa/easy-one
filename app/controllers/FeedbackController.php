@@ -9,7 +9,7 @@ use app\storages\FeedbackStorage;
 use easy\basic\router\Route;
 use easy\db\Transaction;
 use easy\http\Request;
-use easy\MVC\Controller;
+use easy\mvc\Controller;
 
 #[Route('/feedback')]
 class FeedbackController extends Controller

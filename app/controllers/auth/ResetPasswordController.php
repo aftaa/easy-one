@@ -7,7 +7,7 @@ use app\storages\UserStorage;
 use easy\auth\PasswordHash;
 use easy\basic\router\Route;
 use easy\http\Request;
-use easy\MVC\Controller;
+use easy\mvc\Controller;
 
 class ResetPasswordController extends Controller
 {

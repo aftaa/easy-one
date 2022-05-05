@@ -9,7 +9,7 @@ use easy\db\Storage;
 use easy\http\Request;
 
 #[Route('/tables')]
-class ShowTablesController extends \easy\MVC\Controller
+class ShowTablesController extends \easy\mvc\Controller
 {
     /**
      * @throws \Throwable

@@ -15,9 +15,9 @@ class Cookies
 
     /**
      * @param string $name
-     * @return string
+     * @return Cookie
      */
-    public function get(string $name): string
+    public function get(string $name): Cookie
     {
         return new Cookie($name, $_COOKIE[$name]);
     }
@@ -25,6 +25,7 @@ class Cookies
     /**
      * @param Cookie $cookie
      * @return bool
+     * @throws \Exception
      */
     public function add(Cookie $cookie): bool
     {

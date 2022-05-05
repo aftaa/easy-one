@@ -5,7 +5,7 @@ namespace app\controllers\auth;
 use easy\auth\Authenticate;
 use easy\auth\RememberMe;
 use easy\basic\router\Route;
-use easy\MVC\Controller;
+use easy\mvc\Controller;
 
 class LogoutController extends Controller
 {

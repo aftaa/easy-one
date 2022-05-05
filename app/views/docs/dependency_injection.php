@@ -1,5 +1,5 @@
 <?php
-/** @var $this \easy\MVC\View */
+/** @var $this \easy\mvc\View */
 $this->layout = 'docs';
 $this->params['title'] = 'Установка';
 ?>

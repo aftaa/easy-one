@@ -7,7 +7,7 @@ use easy\auth\RememberMe;
 use easy\basic\router\Route;
 use easy\http\Request;
 use easy\http\Response;
-use easy\MVC\Controller;
+use easy\mvc\Controller;
 
 class LoginController extends Controller
 {

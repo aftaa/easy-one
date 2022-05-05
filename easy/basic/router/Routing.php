@@ -9,6 +9,7 @@ class Routing
         public string $action,
         public ?string $name = null,
         public ?string $path = null,
+        public ?RoutingMethods $methods = null,
     )
     { }
 }

@@ -10,7 +10,7 @@ use app\storages\GuestbookEntryStorage;
 use easy\basic\router\Route;
 use easy\db\Transaction;
 use easy\http\Request;
-use easy\MVC\Controller;
+use easy\mvc\Controller;
 
 #[Route('/')]
 class IndexController extends Controller
@@ -24,7 +24,7 @@ class IndexController extends Controller
     /**
      * @throws \Throwable
      */
-    #[Route('test1', name: 'entry_index')]
+    #[Route('test1', name: 'entry_index', methods: ['GET'])]
     public function entryIndex(GuestbookEntryStorage $storage, Request $request, AuthorStorage $authorStorage)
     {
         if ($request->isPost() && ($deleted = $request->query('delete'))) {
@@ -48,7 +48,7 @@ class IndexController extends Controller
     /**
      * @throws \Throwable
      */
-    #[Route('deleted', name: 'entry_deleted')]
+    #[Route('deleted', name: 'entry_deleted', methods: ['GET'])]
     public function deleted(Request $request, GuestbookEntryStorage $storage, AuthorStorage $authorStorage)
     {
         if ($request->isPost() && ($deleted = $request->query('delete'))) {
@@ -72,7 +72,7 @@ class IndexController extends Controller
     /**
      * @throws \Exception
      */
-    #[Route('modify', name: 'entry_modify')]
+    #[Route('modify', name: 'entry_modify', methods: ['POST', 'GET'])]
     public function modify(GuestbookEntryStorage $storage, Request $request, AuthorStorage $authorStorage)
     {
 //        $statusCases = GuestbookEntryStatus::c();
@@ -99,7 +99,7 @@ class IndexController extends Controller
      * @throws \ReflectionException
      * @throws \Throwable
      */
-    #[Route('create', name: 'entry_create')]
+    #[Route('create', name: 'entry_create', methods: ['GET', 'POST'])]
     public function create(Request $request, GuestbookEntryStorage $storage, AuthorStorage $authorStorage, Transaction $transaction)
     {
         $errorMessage = '';
@@ -145,7 +145,7 @@ class IndexController extends Controller
         ]);
     }
 
-    #[Route('done', name: 'entry_created')]
+    #[Route('done', name: 'entry_created', methods: ['GET'])]
     public function done(AuthorStorage $authorStorage, GuestbookEntryStorage $storage, Request $request)
     {
         /** @var GuestbookEntry $entry */

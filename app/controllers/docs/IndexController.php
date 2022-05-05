@@ -3,7 +3,7 @@
 namespace app\controllers\docs;
 
 use easy\basic\router\Route;
-use easy\MVC\Controller;
+use easy\mvc\Controller;
 
 #[Route('/docs/')]
 class IndexController extends Controller

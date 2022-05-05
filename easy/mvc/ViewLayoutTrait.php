@@ -1,6 +1,6 @@
 <?php
 
-namespace easy\MVC;
+namespace easy\mvc;
 
 use app\entities\User;
 use easy\Application;

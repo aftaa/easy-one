@@ -1,13 +1,12 @@
 <?php
 
-namespace easy\MVC;
+namespace easy\mvc;
 
 use app\entities\User;
 use easy\auth\Authenticate;
 use easy\http\Session;
 use easy\auth\RememberMe;
 use easy\basic\Router;
-use easy\http\Response;
 
 class Controller
 {
@@ -15,12 +14,11 @@ class Controller
      * @throws \Exception
      */
     final public function __construct(
-        private View       $view,
-        private Layout     $layout,
-        private Response   $response,
-        private Router     $router,
-        private RememberMe $rememberMe,
-        private Session    $session,
+        private readonly View       $view,
+        private readonly Layout     $layout,
+        private readonly Router     $router,
+        private readonly RememberMe $rememberMe,
+        private readonly Session    $session,
     )
     {
         $this->rememberMe->authenticate();
