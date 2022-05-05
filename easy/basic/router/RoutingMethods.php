@@ -7,6 +7,8 @@ use function implode;
 
 class RoutingMethods implements \Stringable
 {
+    public string $requestedMethod;
+
     /**
      * @param array|null $methods
      */
@@ -14,6 +16,7 @@ class RoutingMethods implements \Stringable
         public readonly ?array $methods = null,
     )
     {
+        $this->requestedMethod = $_SERVER['REQUEST_METHOD'];
     }
 
     /**
@@ -24,8 +27,7 @@ class RoutingMethods implements \Stringable
         if (!$this->methods) {
             return true;
         }
-        $requestMethod = $_SERVER['REQUEST_METHOD'];
-        return in_array($requestMethod, $this->methods);
+        return in_array($this->requestedMethod, $this->methods);
     }
 
     /**
