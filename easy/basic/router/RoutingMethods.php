@@ -38,6 +38,6 @@ class RoutingMethods implements \Stringable
         if (!$this->methods) {
             return '';
         }
-        return '[' . implode(', ', $this->methods) . ']';
+        return '[' . implode(separator: ', ', array: $this->methods) . ']';
     }
 }
