@@ -12,8 +12,8 @@ class DependencyInjection
      * @param ServiceContainer $serviceContainer
      */
     public function __construct(
-        private Config $config,
-        private ServiceContainer $serviceContainer,
+        private readonly Config $config,
+        private readonly ServiceContainer $serviceContainer,
     )
     { }
 
@@ -24,7 +24,6 @@ class DependencyInjection
      */
     public function make(string $classname): object
     {
-//        echo $classname, '<br>';
         if (Turn::ON === $this->config->useServiceContainer && $this->serviceContainer->has($classname)) {
             return $this->serviceContainer->get($classname);
         }

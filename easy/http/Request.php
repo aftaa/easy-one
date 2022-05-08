@@ -4,29 +4,31 @@ namespace easy\http;
 
 class Request
 {
+    private const POST = 'POST';
+
     /**
      * @param string $name
-     * @return string|null
+     * @return string|array|null
      */
-    public function get(string $name): ?string
+    public function get(string $name): null|string|array
     {
         return $_GET[$name] ?? null;
     }
 
     /**
      * @param string $name
-     * @return string|null
+     * @return string|array|null
      */
-    public function post(string $name): ?string
+    public function post(string $name): null|string|array
     {
         return $_POST[$name] ?? null;
     }
 
     /**
      * @param string $name
-     * @return string|null
+     * @return string|array|null
      */
-    public function query(string $name): ?string
+    public function query(string $name): null|string|array
     {
         return $_REQUEST[$name] ?? null;
     }
@@ -36,6 +38,6 @@ class Request
      */
     public function isPost(): bool
     {
-        return !empty($_POST);
+        return self::POST === $_SERVER['REQUEST_METHOD'];
     }
 }

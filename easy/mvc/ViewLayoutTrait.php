@@ -11,12 +11,12 @@ trait ViewLayoutTrait
 {
     /**
      * @param string $string
-     * @param $flags
+     * @param int $flags
      * @param string|null $encoding
      * @param bool $double_encode
      * @return string
      */
-    public function escape(string $string, $flags = ENT_QUOTES|ENT_SUBSTITUTE, ?string $encoding = 'UTF-8', bool $double_encode = true): string
+    public function escape(string $string, int $flags = ENT_QUOTES|ENT_SUBSTITUTE, ?string $encoding = 'UTF-8', bool $double_encode = true): string
     {
         return htmlspecialchars($string, $flags, $encoding, $double_encode);
     }

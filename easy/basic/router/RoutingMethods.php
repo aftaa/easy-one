@@ -22,7 +22,7 @@ class RoutingMethods implements \Stringable
     /**
      * @return bool
      */
-    public function applicable(): bool
+    public function isApplicable(): bool
     {
         if (!$this->methods) {
             return true;

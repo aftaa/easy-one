@@ -10,4 +10,5 @@ class Author extends Entity
     public string $name;
 
     /** @var $entries GuestbookEntry[] */
+//    public array $entries;
 }

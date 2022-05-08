@@ -28,23 +28,21 @@ class ArrayToEntity
                 case 'double':
                 case 'string':
                 case 'bool':
-
-
-                    if (!$data[$propertyName] && $propertyType->allowsNull()) {
+                    if (null === $data[$propertyName] && $propertyType->allowsNull()) {
                         $entity->$propertyName = null;
                     } else {
                         $entity->$propertyName = $data[$propertyName];
                     }
                     continue 2;
                 case \DateTime::class:
-                    if (!$data[$propertyName] && $propertyType->allowsNull()) {
+                    if (null === $data[$propertyName] && $propertyType->allowsNull()) {
                         $entity->$propertyName = null;
                     } else {
                         $entity->$propertyName = new \DateTime($data[$propertyName] ?? 'now');
                     }
                     continue 2;
                 case \DateTimeImmutable::class:
-                    if (!$data[$propertyName] && $propertyType->allowsNull()) {
+                    if (null === $data[$propertyName] && $propertyType->allowsNull()) {
                         $entity->$propertyName = null;
                     } else {
                         $entity->$propertyName = new \DateTimeImmutable($data[$propertyName] ?? 'now');
@@ -54,7 +52,7 @@ class ArrayToEntity
 
             if (enum_exists($propertyType->getName())) {
                 $typename = $propertyType->getName();
-                $value = isset($data[$propertyName]) ? $data[$propertyName] : null;
+                $value = $data[$propertyName] ?? null;
                 $entity->$propertyName = $value ? $typename::from($value) : null;
             } elseif (class_exists($propertyType->getName())) {
                 continue 1;

@@ -50,7 +50,9 @@ class GroupController extends Controller
     #[Route('/delete', name: 'delete_groups', methods: ['POST'])]
     public function delete(Request $request, GroupService $service)
     {
-        if ($request->isPost() && $request->query('delete')) {
+        if ('admin' !== $this->user()?->group->name) {
+            $this->render('errors/403');
+        } elseif ($request->isPost() && $request->query('delete')) {
             $service->deleteGroups($request->query('delete'));
         }
         $this->back();

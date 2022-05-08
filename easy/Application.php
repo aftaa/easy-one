@@ -58,7 +58,7 @@ final class Application
      */
     public function main(DependencyInjection $dependencyInjection, Routing $routing): void
     {
-        if (!$routing->methods->applicable()) {
+        if (!$routing->methods->isApplicable()) {
             throw new \Exception("Метод $routing->controller::$routing->action не поддерживает вызов HTTP-методом {$routing->methods->requestedMethod}");
         }
         $controller = $dependencyInjection->make($routing->controller);
