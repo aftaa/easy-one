@@ -2,6 +2,8 @@
 
 namespace easy\basic\router;
 
+use easy\basic\router\pocket\PocketRoute;
+
 class RoutesCollector
 {
     /**
@@ -12,6 +14,8 @@ class RoutesCollector
     public function collect(array $files): CollectedRoutes
     {
         $byName = $byPath = [];
+        /** @var PocketRoute[] $pocketRouters */
+        $pocketRoutes = [];
         $fileNameToClassName = new FilenameToClassname();
         foreach ($files as $file) {
             $class = $fileNameToClassName->transform($file);
@@ -35,14 +39,26 @@ class RoutesCollector
                     if ($pathPrefix) {
                         $path = $pathPrefix . $path;
                     }
-                    $routing = new Routing($class, $method->name, $name, $path, $methods);
+
+                    if (PocketRoute::isPocketRoute($path)) {
+                        $pocketRoute = new PocketRoute($path);
+                    } else {
+                        $pocketRoute = null;
+                    }
+
+                    $routing = new Routing($class, $method->name, $name, $path, $pocketRoute, $methods);
                     if ($name) {
                         $byName[$name] = $routing;
                     }
-                    $byPath[$path] = $routing;
+
+                    if ($path instanceof PocketRoute) {
+                        $pocketRoutes[] = $path;
+                    } else {
+                        $byPath[$path] = $routing;
+                    }
                 }
             }
         }
-        return new CollectedRoutes($byName, $byPath);
+        return new CollectedRoutes($byName, $byPath, $pocketRoutes);
     }
 }

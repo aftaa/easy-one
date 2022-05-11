@@ -24,6 +24,16 @@
             </div>
         </li>
         <li>
+            <a data-href="debug-bottom-remember-me">Rememeber Me</a>
+            <div id="debug-bottom-remember-me" class="debug-bottom-sub">
+                <?php
+                /** @var \easy\helpers\RememberMeStatus $rememberMeStatus */
+                $rememberMeStatus = \easy\Application::$serviceContainer->get(\easy\helpers\RememberMeStatus::class);
+                echo 'RememberMe is ', $rememberMeStatus->isStatus() ? 'OK' : 'fail';
+                ?>
+            </div>
+        </li>
+        <li>
             <a data-href="">
                 <?php
                 /** @var \easy\helpers\TimeExecution $timeExecution */

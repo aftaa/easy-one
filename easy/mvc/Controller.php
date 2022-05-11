@@ -4,6 +4,7 @@ namespace easy\mvc;
 
 use app\entities\User;
 use easy\auth\Authenticate;
+use easy\helpers\RememberMeStatus;
 use easy\http\Session;
 use easy\auth\RememberMe;
 use easy\basic\Router;
@@ -14,14 +15,16 @@ class Controller
      * @throws \Exception
      */
     final public function __construct(
-        private readonly View       $view,
-        private readonly Layout     $layout,
-        private readonly Router     $router,
+        private readonly View $view,
+        private readonly Layout $layout,
+        private readonly Router $router,
         private readonly RememberMe $rememberMe,
-        private readonly Session    $session,
+        private readonly Session $session,
+        private readonly RememberMeStatus $rememberMeStatus,
     )
     {
-        $this->rememberMe->authenticate();
+        $authenticated = $this->rememberMe->authenticate();
+        $this->rememberMeStatus->setStatus($authenticated);
     }
 
     /**
@@ -79,4 +82,5 @@ class Controller
             return $this->session->get(Authenticate::class);
         }
         return null;
-    }}
+    }
+}

@@ -90,7 +90,20 @@
     width: 900px;
 }
 
-#debug-bottom-load-classes, #debug-bottom-container, #debug-bottom-queries, #debug-bottom-routes {
+#debug-bottom-remember-me {
+    background: #eee;
+    border-bottom: 1px solid red;
+    bottom: 44px;
+    color: #000;
+    height: 50px;
+    overflow: auto;
+    padding: 10px;
+    position: fixed;
+    width: 900px;
+}
+
+#debug-bottom-load-classes, #debug-bottom-container, #debug-bottom-queries, #debug-bottom-routes,
+#debug-bottom-remember-me {
     display: none;
 }
 

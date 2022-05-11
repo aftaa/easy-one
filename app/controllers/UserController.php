@@ -44,4 +44,14 @@ class UserController extends Controller
 
         $this->redirectToRoute('user_list');
     }
+
+    #[Route('/add', name: 'add_user')]
+    public function add(Request $request, UserStorage $storage)
+    {
+        if ('admin' !== $this->user()?->group->name) {
+            $this->render('errors/404');
+        } else {
+            $this->render('users/add');
+        }
+    }
 }

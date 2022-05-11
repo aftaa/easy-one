@@ -57,8 +57,15 @@
                 <li class="nav-item">
                     <?= $this->link('login', [], 'Login', htmlOptions: ['class' => 'nav-link']) ?>
                 </li>
-                <li class="nav-item">
-                    <?= $this->link('user_list', [], 'Users', htmlOptions: ['class' => 'nav-link']) ?>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Users
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><?= $this->link('add_user', [], 'Create', ['class' => 'dropdown-item']) ?></li>
+                        <li><?= $this->link('user_list', [], 'List', ['class' => 'dropdown-item']) ?></li>
+                    </ul>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"

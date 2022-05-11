@@ -33,17 +33,18 @@ class RememberMe
     }
 
     /**
-     * @return void
+     * @return bool
      */
-    public function authenticate(): void
+    public function authenticate(): bool
     {
-        if (!$this->cookies->has(self::REMEMBER_ME_EMAIL)) return;
+        if (!$this->cookies->has(self::REMEMBER_ME_EMAIL)) return false;
 
         $email = (string)$this->cookies->get(self::REMEMBER_ME_EMAIL);
         $password = (string)$this->cookies->get(self::REMEMBER_ME_PASSWORD);
         try {
-            $this->authenticate->login($email, $password);
+            return $this->authenticate->login($email, $password);
         } catch (\Exception) {
+            return false;
         }
     }
 
